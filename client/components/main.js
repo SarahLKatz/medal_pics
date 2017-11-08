@@ -14,8 +14,8 @@ const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
 
   return (
-    <div>
-      <h1>BOILERMAKER</h1>
+    <div className="container">
+      <h3 className="col-xs-12 text-center">Pics Or You Didn't Medal</h3>
       <nav>
         {
           isLoggedIn
