@@ -6,10 +6,10 @@ import {connect} from 'react-redux'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {name, race, raceCompleted} = props
+  const {name, race, raceCompleted, lat, long} = props;
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3>Welcome, {name}</h3>
       <div className="col-xs-12">
       {
@@ -22,6 +22,11 @@ export const UserHome = (props) => {
           <h4>Good Luck on Your Race! Run Awesome!</h4>
         </div>
       }
+      <div className="container-fluid">
+        {lat && raceCompleted && 
+          <h5>Looking for some great race medal picture ideas? <a href={`http://www.shothotspot.com/hotspots/?nelng=${long+.005}&nelat=${lat+.005}&swlat=${lat-.005}&swlng=${long-.005}`}>Click here</a> for a map of popular local photo locations!</h5>
+        }
+      </div>
       </div>
     </div>
   )
@@ -34,7 +39,9 @@ const mapState = (state) => {
   return {
     name: state.user.name,
     race: state.race,
-    raceCompleted: state.race.completed
+    raceCompleted: state.race.completed,
+    lat: state.location[0],
+    long: state.location[1]
   }
 }
 
