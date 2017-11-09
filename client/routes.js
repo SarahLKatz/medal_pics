@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, NewRace} from './components'
-import {me} from './store'
+import {me, getRaceThunk} from './store'
 
 /**
  * COMPONENT
@@ -16,7 +16,8 @@ class Routes extends Component {
   }
 
   render () {
-    const {isLoggedIn, userId} = this.props
+    const {isLoggedIn, userId, getRace} = this.props
+    getRace(userId)
     return (
       <Router history={history}>
         <Main>
@@ -57,6 +58,9 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+    },
+    getRace (userId) {
+      dispatch(getRaceThunk(userId))
     }
   }
 }

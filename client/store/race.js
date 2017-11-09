@@ -5,49 +5,46 @@ import history from '../history'
  * ACTION TYPES
  */
 const CREATE_RACE = 'CREATE_RACE'
-const CHECK_RACE_COMPLETION = 'CHECK_RACE_COMPLETION'
+const GET_RACE = 'GET_RACE'
 
 /**
  * INITIAL STATE
  */
-const defaultRace = {}
+const defaultState = {}
 
 /**
  * ACTION CREATORS
  */
 const createRace = race => ({type: CREATE_RACE, race})
-const checkRaceCompletion = raceCompleted => ({type: CHECK_RACE_COMPLETION, raceCompleted })
+const getRace = race => ({type: GET_RACE, race})
 
 /**
  * THUNK CREATORS
  */
- ////START HERE
 export const createRaceThunk = (race) => 
   dispatch =>
     axios.post(`/api/users/${race.userId}/races`, race)
       .then(res => {
-        console.log(res.data)
         dispatch(createRace(res.data))
         history.push('/home')
       })
       .catch(err => console.error(err))
 
-export const isRaceCompleted = (race) => 
-  dispatch => 
-    axios.get(`/api/users/${race.userId}/races`)
+export const getRaceThunk = (userId) => 
+  dispatch =>
+    axios.get(`/api/users/${userId}/races`)
     .then(res => res.data)
-    .then(raceData => dispatch(checkRaceCompletion(raceData.completed)))
-    .catch(err => console.error(err))
+    .then(raceData => dispatch(getRace(raceData)))
 
 /**
  * REDUCER
  */
-export default function (state = defaultRace, action) {
+export default function (state = defaultState, action) {
   switch (action.type) {
     case CREATE_RACE:
       return action.race
-    case CHECK_RACE_COMPLETION:
-      return race.completed
+    case GET_RACE:
+      return action.race
     default:
       return state
   }

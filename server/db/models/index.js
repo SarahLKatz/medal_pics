@@ -8,7 +8,8 @@ const Race = require('./race')
  *    BlogPost.belongsTo(User)
  */
 
- Race.belongsTo(User)
+ Race.belongsTo(User);
+ User.hasMany(Race);
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
