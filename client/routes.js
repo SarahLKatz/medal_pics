@@ -5,6 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
+import NewRace from './components/NewRace'
 import {me} from './store'
 
 /**
@@ -17,7 +18,6 @@ class Routes extends Component {
 
   render () {
     const {isLoggedIn} = this.props
-
     return (
       <Router history={history}>
         <Main>
@@ -30,6 +30,7 @@ class Routes extends Component {
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
                   <Route path="/home" component={UserHome} />
+                  <Route path="/newrace" component={NewRace} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
