@@ -6,7 +6,6 @@ import history from '../history'
  */
 const CREATE_RACE = 'CREATE_RACE'
 const GET_RACE = 'GET_RACE'
-const CHECK_RACE_COMPLETION = 'CHECK_RACE_COMPLETION'
 
 /**
  * INITIAL STATE
