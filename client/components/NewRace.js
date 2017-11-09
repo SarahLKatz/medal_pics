@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-// import store from '../store';
-// import axios from 'axios';
 import {connect} from 'react-redux'
 import {createRaceThunk} from '../store'
 
