@@ -30,10 +30,6 @@ router.get('/:id/races', (req,res,next) => {
 })
 
 router.post('/:id/races', (req, res, next) => {
-  const userId = req.params.id;
   Race.create(req.body)
-  .then(newRace => {
-    return newRace.setUser(userId)
-  })
   .then(race => res.json(race))
 })
