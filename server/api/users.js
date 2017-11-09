@@ -21,6 +21,7 @@ router.get('/:id/races', (req,res,next) => {
     }
   })
   .then(races => {
+    races.sort((a,b) => a.date < b.date);
     const lastRace = races[races.length-1];
     res.json({
       race: lastRace,

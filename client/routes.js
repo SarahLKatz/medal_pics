@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, NewRace} from './components'
-import {me, getRaceThunk} from './store'
+import {me, getRaceThunk, getCurrentLocation} from './store'
 
 /**
  * COMPONENT
@@ -13,6 +13,7 @@ import {me, getRaceThunk} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
+    this.props.getLocation()
   }
 
   render () {
@@ -50,7 +51,8 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    userId: state.user.id
+    userId: state.user.id,
+    location: state.location
   }
 }
 
@@ -61,6 +63,9 @@ const mapDispatch = (dispatch) => {
     },
     getRace (userId) {
       dispatch(getRaceThunk(userId))
+    },
+    getLocation () {
+      dispatch(getCurrentLocation())
     }
   }
 }
@@ -72,5 +77,8 @@ export default connect(mapState, mapDispatch)(Routes)
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  userId: PropTypes.number,
+  getRace: PropTypes.func,
+  getLocation: PropTypes.func,
 }
