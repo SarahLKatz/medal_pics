@@ -9,12 +9,38 @@ describe('User model', () => {
     return db.sync({force: true})
   })
 
+  describe('CreatesUser', () => {
+    describe('UserNameSaved', () => {
+      let liana
+
+      beforeEach(() => {
+        return User.create({
+          name: 'Liana',
+          email: 'liana@alwaysnice.com',
+          password: 'baloons'
+        })
+          .then(user => {
+            liana = user
+          })
+      })
+
+      it('creates a user in the database with the correct email', () => {
+        expect(liana.email).to.be.equal('liana@alwaysnice.com')
+      })
+
+      it('saves the users name in the database', () => {
+        expect(liana.name).to.be.equal('Liana')
+      })
+    }) // end describe('UserNameSaved')
+  }) // end describe('CreatesUser')
+
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
       let cody
 
       beforeEach(() => {
         return User.create({
+          name: 'Cody',
           email: 'cody@puppybook.com',
           password: 'bones'
         })
