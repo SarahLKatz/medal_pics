@@ -34,8 +34,8 @@ Race.prototype.isCompleted = function () {
   const dateBreakdown = this.date.split('-');
   const startBreakdown = this.start.split(':').map(x => Number(x));
   const finishBreakdown = this.completionTime.split(':').map(x => Number(x));
-  const hour = startBreakdown[0]+ (finishBreakdown[0] || 00) ;
-  const min = (startBreakdown[1] || 00) + (finishBreakdown[1] || 00);
+  const hour = startBreakdown[0]+ (finishBreakdown[0]) ;
+  const min = (startBreakdown[1]) + (finishBreakdown[1]);
   const raceOver = moment({ y: dateBreakdown[0], M :dateBreakdown[1]-1, d :dateBreakdown[2], h : hour, m :min, s: finishBreakdown[2]});
   return now > raceOver
 }
