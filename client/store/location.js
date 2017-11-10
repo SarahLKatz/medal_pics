@@ -25,10 +25,7 @@ export const getCurrentLocation = () =>
       lat = location.coords.latitude;
       long = location.coords.longitude;
       dispatch(getLocation([lat,long]))
-      history.push('/home')
     })
-    // .then(dispatch(getLocation([lat,long])))
-    // .catch(err => console.error(err))
   }
 
 /**

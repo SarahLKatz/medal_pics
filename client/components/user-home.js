@@ -9,9 +9,9 @@ export const UserHome = (props) => {
   const {name, race, raceCompleted, lat, long} = props;
 
   return (
-    <div className="container-fluid">
+    <div className="col-xs-12 text-center main-content">
       <h3>Welcome, {name}</h3>
-      <div className="col-xs-12">
+      <div>
       {
         raceCompleted ?
         <div>
@@ -22,9 +22,13 @@ export const UserHome = (props) => {
           <h4>Good Luck on Your Race! Run Awesome!</h4>
         </div>
       }
-      <div className="container-fluid">
-        {lat && raceCompleted && 
-          <h5>Looking for some great race medal picture ideas? <a href={`http://www.shothotspot.com/hotspots/?nelng=${long+.005}&nelat=${lat+.005}&swlat=${lat-.005}&swlng=${long-.005}`}>Click here</a> for a map of popular local photo locations!</h5>
+      <div>
+        {/*{ raceCompleted && */}
+        { 
+          (lat ?
+            <h5>Looking for some great race medal picture ideas? <a href={`http://www.shothotspot.com/hotspots/?nelng=${long+.005}&nelat=${lat+.005}&swlat=${lat-.005}&swlng=${long-.005}`}>Click here</a> for a map of popular local photo locations!</h5>
+          :
+            <h5>Get a drink of water, eat a banana, and come back soon for some great photo op ideas!</h5>)
         }
       </div>
       </div>
