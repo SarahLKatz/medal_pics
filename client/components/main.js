@@ -16,7 +16,7 @@ const Main = (props) => {
   return (
     <div className="container">
       <h3 className="col-xs-12 text-center">Pics Or You Didn't Medal</h3>
-      <nav>
+      <nav className="text-center nav-top">
         {
           isLoggedIn
             ? <div>
@@ -32,8 +32,9 @@ const Main = (props) => {
             </div>
         }
       </nav>
-      <hr />
-      {children}
+      <div className="main-content">
+        {children}
+      </div>
     </div>
   )
 }
