@@ -8,36 +8,36 @@ const NewRace = (props) => {
   return(
       <div className="container">
         <h3>Add a New Race</h3>
-        <form onSubmit={submitRace} name='newrace'>
-          <div className="form-group col-xs-10">
+        <form onSubmit={submitRace} name="newrace" className="add-race">
+          <div className="form-group col-xs-12">
             <label htmlFor="raceName"><small>Race Name: </small>
               <input name="raceName" type="text" />
             </label>
           </div>
-          <div className="form-group col-xs-10">
+          <div className="form-group col-xs-12">
             <label htmlFor="raceDate"><small>Race Date: </small>
               <input name="raceDate" type="text" />
             </label>
           </div>
-          <div className="form-group col-xs-10">
+          <div className="form-group col-xs-12">
             <label htmlFor="raceStart"><small>Race Start Time: </small>
               <input name="raceStart" type="text" />
-              <small> (HH:MM 24-hour format)</small>
+              <small className="comments">(HH:MM 24-hour format)</small>
             </label>
           </div>
-          <div className="form-group col-xs-10">
+          <div className="form-group col-xs-12">
             <label htmlFor="raceLocale"><small>Race Location: </small>
               <input name="raceLocale" type="text" />
-              <small> (for point-to-point race, enter finish location)</small>
+              <small className="comments">(for point-to-point race, enter finish location)</small>
             </label>
           </div>
-          <div className="form-group col-xs-10">
+          <div className="form-group col-xs-12">
             <label htmlFor="finishTime"><small>Estimated Completion Time: </small>
               <input name="finishTime" type="text" />
-              <small> (HH:MM:SS format)</small>
+              <small className="comments">(HH:MM:SS format)</small>
             </label>
           </div>
-          <div className="form-group col-xs-10">
+          <div className="form-group col-xs-12">
             <button name="raceSubmit">Add Your Race</button>
           </div>
         </form>
