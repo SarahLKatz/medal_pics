@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A resource to help you get the best race medal pictures!",
   "engines": {
-    "node": ">= 7.0.0"
+    "node": "8.4.0"
   },
   "main": "index.js",
   "scripts": {
