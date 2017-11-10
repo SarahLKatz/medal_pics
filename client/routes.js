@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, NewRace, Photos} from './components'
-import {me, getRaceThunk, getCurrentLocation, fetchPicturesFromAPI} from './store'
+import {me, getRaceThunk, getRaceLocation, fetchPicturesFromAPI} from './store'
 
 /**
  * COMPONENT
@@ -65,7 +65,8 @@ const mapDispatch = (dispatch) => {
         return dispatch(getRaceThunk(res.user.id))
       })
       .then(res => {
-        dispatch(getCurrentLocation())
+        console.log('load initial data:', res)
+        dispatch(getRaceLocation(res.race.race))
       })
       .catch(err => console.error(err))
     },
