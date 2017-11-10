@@ -23,8 +23,7 @@ export const UserHome = (props) => {
         </div>
       }
       <div>
-        {/*{ raceCompleted && */}
-        { 
+        { raceCompleted &&
           (lat ?
             <h5>Looking for some great race medal picture ideas? <a href={`http://www.shothotspot.com/hotspots/?nelng=${long+.005}&nelat=${lat+.005}&swlat=${lat-.005}&swlng=${long-.005}`}>Click here</a> for a map of popular local photo locations!</h5>
           :
