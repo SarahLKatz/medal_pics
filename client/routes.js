@@ -4,8 +4,8 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, NewRace} from './components'
-import {me, getRaceThunk, getCurrentLocation} from './store'
+import {Main, Login, Signup, UserHome, NewRace, Photos} from './components'
+import {me, getRaceThunk, getCurrentLocation, fetchPicturesFromAPI} from './store'
 
 /**
  * COMPONENT
@@ -13,12 +13,11 @@ import {me, getRaceThunk, getCurrentLocation} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
-    this.props.getLocation()
   }
 
   render () {
-    const {isLoggedIn, userId, getRace} = this.props
-    getRace(userId)
+    const {isLoggedIn, userId, location, getPictures} = this.props
+    getPictures(location)
     return (
       <Router history={history}>
         <Main>
@@ -30,8 +29,10 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
+                  <Route exact path="/" component={UserHome} />
                   <Route path="/home" component={UserHome} />
                   <Route path="/newrace" render={() => <NewRace userId={userId} />} />
+                  <Route path="/photos" component={UserHome} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -60,12 +61,16 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      .then(res => {
+        return dispatch(getRaceThunk(res.user.id))
+      })
+      .then(res => {
+        dispatch(getCurrentLocation())
+      })
+      .catch(err => console.error(err))
     },
-    getRace (userId) {
-      dispatch(getRaceThunk(userId))
-    },
-    getLocation () {
-      dispatch(getCurrentLocation())
+    getPictures (location) {
+      dispatch(fetchPicturesFromAPI(location))
     }
   }
 }
