@@ -53,7 +53,6 @@ const mapState = (state) => {
     isLoggedIn: !!state.user.id,
     userId: state.user.id,
     race: state.race
-    // location: state.location
   }
 }
 

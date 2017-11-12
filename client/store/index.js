@@ -9,8 +9,9 @@ import photos from './photos'
 
 const reducer = combineReducers({user, race, location, photos})
 const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({collapsed: true})
+  thunkMiddleware
+  // ,
+  // createLogger({collapsed: true})
 ))
 const store = createStore(reducer, middleware)
 
