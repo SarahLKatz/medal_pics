@@ -1,6 +1,6 @@
 const passport = require('passport')
 const router = require('express').Router()
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+var StravaStrategy = require('passport-strava').Strategy;
 const {User} = require('../db/models')
 module.exports = router
 
@@ -18,22 +18,22 @@ module.exports = router
  * process.env.GOOGLE_CALLBACK = '/your/google/callback'
  */
 
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+if (!process.env.STRAVA_CLIENT_ID || !process.env.STRAVA_CLIENT_SECRET) {
 
-  console.log('Google client ID / secret not found. Skipping Google OAuth.')
+  console.log('Strava client ID / secret not found. Skipping Strava OAuth.')
 
 } else {
 
-  const googleConfig = {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+  const stravaConfig = {
+    clientID: process.env.STRAVA_CLIENT_ID,
+    clientSecret: process.env.STRAVA_CLIENT_SECRET,
+    callbackURL: process.env.STRAVA_CALLBACK
   }
 
-  const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done) => {
-    const googleId = profile.id
+  const strategy = new StravaStrategy(stravaConfig, (token, refreshToken, profile, done) => {
+    const stravaId = profile.id
     const name = profile.displayName
-    const email = profile.emails[0].value
+    const email = profile._json.email
 
     User.find({where: {stravaId}})
       .then(foundUser => (foundUser
@@ -44,13 +44,14 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
       .catch(done)
   })
 
-  passport.use(strategy)
+  passport.use(strategy);
 
-  router.get('/', passport.authenticate('google', {scope: 'email'}))
+  router.get('/', passport.authenticate('strava', {scope: 'email'}))
 
-  router.get('/callback', passport.authenticate('google', {
+  router.get('/callback', passport.authenticate('strava', {
     successRedirect: '/home',
     failureRedirect: '/login'
   }))
 
 }
+

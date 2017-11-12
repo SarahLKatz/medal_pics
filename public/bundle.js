@@ -10966,6 +10966,12 @@ var AuthForm = function AuthForm(props) {
         error.response.data,
         ' '
       )
+    ),
+    _react2.default.createElement(
+      'a',
+      { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback' },
+      displayName,
+      ' with Strava'
     )
   );
 };

@@ -32,6 +32,7 @@ const AuthForm = (props) => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
+      <a href="https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback">{displayName} with Strava</a>
       {/*<a href="/auth/google">{displayName} with Google</a>*/}
     </div>
   )
