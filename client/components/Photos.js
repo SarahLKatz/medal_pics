@@ -2,8 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 export const Photos = (props) => {
-  const {pictures, location } = props;
-  console.log('pictures #', pictures.length)
+  const { pictures } = props;
 
   return (
     <div>
@@ -24,11 +23,8 @@ export const Photos = (props) => {
 }
 
 const mapState = (state, ownProps) => {
-  console.log('state: in photo component', state)
-  console.log('photo ownProps: ', ownProps)
   return {
     pictures: ownProps.pictures,
-    location: state.location
   }
 }
 
