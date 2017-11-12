@@ -21,12 +21,12 @@ const fetchPictures = pictures => ({type: FETCH_PICTURES, pictures})
  */
 export const fetchPicturesFromAPI = (location) => 
   dispatch => {
-    if (location.lat) {
-      let url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=87adce3230bea8a46187c9da7f15a4aa&lat=${location.lat}&lon=${location.long}&format=json&nojsoncallback=1`
+    if (location) {
+      let url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=5882ef090a3d15709a64a5fca8255ff9&lat=${location[0]}&lon=${location[1]}&format=json&nojsoncallback=1`
       axios.get(url)
         .then(res => {
-          dispatch(fetchPictures(res.data.photos.photo.slice(0,10)))
-          history.push('/photos')
+          dispatch(fetchPictures(res.data.photos.photo.slice(0,20)))
+          // history.push('/photos')
         })
         .catch(err => console.error(err))
       }

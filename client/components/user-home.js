@@ -7,7 +7,7 @@ import Photos from './Photos'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {name, race, raceCompleted, lat, long} = props;
+  const {name, race, raceCompleted, lat, long, photos} = props;
 
   return (
     <div className="col-xs-12 text-center main-content">
@@ -23,6 +23,9 @@ export const UserHome = (props) => {
           <h4>Good Luck on Your Race! Run Awesome!</h4>
         </div>
       }
+      {
+        photos.length > 0 && <Photos pictures={photos}/>
+      }
       {/*<div>
         { raceCompleted &&
           (lat ?
@@ -32,7 +35,7 @@ export const UserHome = (props) => {
         }
         </div>
       */}
-      <Photos />
+      {/*<Photos />*/}
       </div>
     </div>
   )
@@ -46,6 +49,7 @@ const mapState = (state) => {
     name: state.user.name,
     race: state.race,
     raceCompleted: state.race.completed,
+    photos: state.photos,
     lat: state.location.lat,
     long: state.location.long
   }

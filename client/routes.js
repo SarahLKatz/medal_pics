@@ -16,8 +16,8 @@ class Routes extends Component {
   }
 
   render () {
-    const {isLoggedIn, userId, location, getPictures} = this.props
-    getPictures(location)
+    const {isLoggedIn, userId, race, getPictures} = this.props
+    if (race.race) getPictures(race.race.coords)
     return (
       <Router history={history}>
         <Main>
@@ -53,7 +53,8 @@ const mapState = (state) => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     userId: state.user.id,
-    location: state.location
+    race: state.race
+    // location: state.location
   }
 }
 
@@ -64,10 +65,10 @@ const mapDispatch = (dispatch) => {
       .then(res => {
         return dispatch(getRaceThunk(res.user.id))
       })
-      .then(res => {
-        console.log('load initial data:', res)
-        dispatch(getRaceLocation(res.race.race))
-      })
+      // .then(res => {
+      //   console.log('load initial data:', res)
+      //   dispatch(getRaceLocation(res.race.race))
+      // })
       .catch(err => console.error(err))
     },
     getPictures (location) {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {createRaceThunk} from '../store'
+import {createRaceThunk} from '../store';
+import axios from 'axios';
 
 const NewRace = (props) => {
   const { submitRace } = props;
@@ -56,7 +57,6 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     submitRace(e) {
       e.preventDefault();
-      console.log(ownProps)
       const race = {
         name: e.target.raceName.value,
         date: e.target.raceDate.value,
@@ -65,7 +65,18 @@ const mapDispatch = (dispatch, ownProps) => {
         completionTime: e.target.finishTime.value,
         userId: ownProps.userId
       }
-      dispatch(createRaceThunk(race))
+      let coords;
+      axios.get(`http://nominatim.openstreetmap.org/search?format=json&q=${e.target.raceLocale.value}`)
+      .then(res => {
+        const location = res.data[0];
+        coords = [location.lat, location.lon];
+      })
+      .then(() => {
+        race.coords = coords;
+        console.log(race)
+        dispatch(createRaceThunk(race))
+      })
+      .catch(err => console.error(err))
     }
   }
 }

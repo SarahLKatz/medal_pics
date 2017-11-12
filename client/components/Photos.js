@@ -3,13 +3,14 @@ import {connect} from 'react-redux';
 
 export const Photos = (props) => {
   const {pictures, location } = props;
+  console.log('pictures #', pictures.length)
 
   return (
     <div>
-      <h3>Photos From Flickr Will Go Here</h3>
+      
       <div>
       {
-        pictures.length >0 && pictures.forEach(photo => {
+        pictures.map(photo => {
           return (
             <div className="photo-carousel" key={photo.id}>
               <img src={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} />
@@ -22,10 +23,11 @@ export const Photos = (props) => {
   )
 }
 
-const mapState = (state) => {
-  console.log('state:', state)
+const mapState = (state, ownProps) => {
+  console.log('state: in photo component', state)
+  console.log('photo ownProps: ', ownProps)
   return {
-    pictures: state.photos,
+    pictures: ownProps.pictures,
     location: state.location
   }
 }
