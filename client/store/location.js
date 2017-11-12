@@ -19,15 +19,6 @@ const getLocation = location => ({type: GET_LOCATION, location})
 /**
  * THUNK CREATORS
  */
-export const getCurrentLocation = () => 
-  dispatch => {
-    let lat, long;
-    navigator.geolocation.getCurrentPosition(location => {
-      lat = location.coords.latitude;
-      long = location.coords.longitude;
-      dispatch(getLocation({lat, long}))
-    })
-  }
 
 export const getRaceLocation = (race) => 
   dispatch => {

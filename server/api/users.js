@@ -20,14 +20,18 @@ router.get('/:id/races', (req,res,next) => {
       userId: req.params.id
     }
   })
-  .then(races => {
-    races.sort((a,b) => a.date > b.date);
-    const lastRace = races[races.length-1];
-    res.json({
-      race: lastRace,
-      completed: lastRace.isCompleted()
+    .then(races => {
+      if (races.length){
+        races.sort((a,b) => a.date > b.date);
+        const lastRace = races[races.length-1];
+        res.json({
+          race: lastRace,
+          completed: lastRace.isCompleted()
+        })
+      } else {
+        res.json({})
+      }
     })
-  })
 })
 
 router.post('/:id/races', (req, res, next) => {
