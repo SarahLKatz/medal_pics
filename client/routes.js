@@ -32,7 +32,6 @@ class Routes extends Component {
                   <Route exact path="/" component={UserHome} />
                   <Route path="/home" component={UserHome} />
                   <Route path="/newrace" render={() => <NewRace userId={userId} />} />
-                  <Route path="/photos" component={UserHome} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -65,10 +64,6 @@ const mapDispatch = (dispatch) => {
       .then(res => {
         return dispatch(getRaceThunk(res.user.id))
       })
-      // .then(res => {
-      //   console.log('load initial data:', res)
-      //   dispatch(getRaceLocation(res.race.race))
-      // })
       .catch(err => console.error(err))
     },
     getPictures (location) {

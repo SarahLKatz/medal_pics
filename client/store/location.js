@@ -36,7 +36,6 @@ export const getRaceLocation = (race) =>
       .then(res => {
         const location = res.data[0];
         dispatch(getLocation({lat: location.lat, long: location.lon }))
-        history.push('/photos')
       })
       .catch(err => console.error(err))}
 

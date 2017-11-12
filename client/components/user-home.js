@@ -7,35 +7,37 @@ import Photos from './Photos'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {name, race, raceCompleted, lat, long, photos} = props;
+  const {name, race, raceCompleted, photos} = props;
+  let lat, long;
+  if (race.race) {
+    lat = race.race.coords[0];
+    long = race.race.coords[1];
+  }
 
   return (
     <div className="col-xs-12 text-center main-content">
-      <h3>Welcome, {name}</h3>
+      <h3>~Welcome{/*, {name}*/}~</h3>
       <div>
       {
         raceCompleted ?
         <div>
           <h4>Congratulations on Your Race!</h4>
+          <p>
+            Looking to take some awesome post-race medal pictures? Here are some pictures taken nearby that you can use for inspiration:
+          </p>
+          <Photos pictures={photos}/>
+          {
+            lat && 
+            <p>
+              Not finding your perfect medal picture? <a href={`http://www.shothotspot.com/hotspots/?nelng=${long+.005}&nelat=${lat+.005}&swlat=${lat-.005}&swlng=${long-.005}`}>Click here</a> for a link with more great ideas!
+            </p>
+          }
         </div>
         :
         <div>
           <h4>Good Luck on Your Race! Run Awesome!</h4>
         </div>
       }
-      {
-        photos.length > 0 && <Photos pictures={photos}/>
-      }
-      {/*<div>
-        { raceCompleted &&
-          (lat ?
-            <h5>Looking for some great race medal picture ideas? <a href={`http://www.shothotspot.com/hotspots/?nelng=${long+.005}&nelat=${lat+.005}&swlat=${lat-.005}&swlng=${long-.005}`}>Click here</a> for a map of popular local photo locations!</h5>
-          :
-            <h5>Get a drink of water, eat a banana, and come back soon for some great photo op ideas!</h5>)
-        }
-        </div>
-      */}
-      {/*<Photos />*/}
       </div>
     </div>
   )
@@ -49,9 +51,7 @@ const mapState = (state) => {
     name: state.user.name,
     race: state.race,
     raceCompleted: state.race.completed,
-    photos: state.photos,
-    lat: state.location.lat,
-    long: state.location.long
+    photos: state.photos
   }
 }
 
