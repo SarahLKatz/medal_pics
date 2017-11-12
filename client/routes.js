@@ -4,8 +4,8 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, NewRace} from './components'
-import {me, getRaceThunk, getCurrentLocation} from './store'
+import {Main, Login, Signup, UserHome, NewRace, Photos} from './components'
+import {me, getRaceThunk, getRaceLocation, fetchPicturesFromAPI} from './store'
 
 /**
  * COMPONENT
@@ -13,12 +13,11 @@ import {me, getRaceThunk, getCurrentLocation} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
-    this.props.getLocation()
   }
 
   render () {
-    const {isLoggedIn, userId, getRace} = this.props
-    getRace(userId)
+    const {isLoggedIn, userId, race, getPictures} = this.props
+    if (race.race) getPictures(race.race.coords)
     return (
       <Router history={history}>
         <Main>
@@ -30,8 +29,10 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
+                  <Route exact path="/" component={UserHome} />
                   <Route path="/home" component={UserHome} />
                   <Route path="/newrace" render={() => <NewRace userId={userId} />} />
+                  <Route path="/photos" component={UserHome} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -52,7 +53,8 @@ const mapState = (state) => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     userId: state.user.id,
-    location: state.location
+    race: state.race
+    // location: state.location
   }
 }
 
@@ -60,12 +62,17 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      .then(res => {
+        return dispatch(getRaceThunk(res.user.id))
+      })
+      // .then(res => {
+      //   console.log('load initial data:', res)
+      //   dispatch(getRaceLocation(res.race.race))
+      // })
+      .catch(err => console.error(err))
     },
-    getRace (userId) {
-      dispatch(getRaceThunk(userId))
-    },
-    getLocation () {
-      dispatch(getCurrentLocation())
+    getPictures (location) {
+      dispatch(fetchPicturesFromAPI(location))
     }
   }
 }

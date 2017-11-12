@@ -19,6 +19,9 @@ const Race = db.define('race', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  coords: {
+    type: Sequelize.ARRAY(Sequelize.FLOAT)
+  },
   completionTime: {
     type: Sequelize.STRING
   }
