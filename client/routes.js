@@ -62,9 +62,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       .then(res => {
-        console.log('i am me')
         if (res.user.stravaId) {
-          console.log('i am a strava user')
           dispatch(grabRaceFromStrava(res.user.id))
         } else {
           dispatch(getRaceThunk(res.user.id))
