@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import Photos from './Photos'
-import {grabRaceFromStrava, fetchPicturesFromAPI} from '../store'
+import {grabRaceFromStrava} from '../store'
 
 /**
  * COMPONENT
