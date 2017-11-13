@@ -32,6 +32,11 @@ body {
     border-bottom: 1px solid #DDD;
   }
 
+  .auth-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
   form div {
     display: inline-block;
 
@@ -41,6 +46,23 @@ body {
         width: 100vw;
         color: red;
       }
+    }
+  }
+
+  .apis {
+    height: 7vh;
+    text-align: center;
+    margin: 1%;
+
+    img {
+      height: 100%;
+      padding-right: 3%
+    }
+
+    span {
+      height: 100%;
+      padding-right: 3%;
+      font-size: 1em;
     }
   }
 }

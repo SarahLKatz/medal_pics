@@ -10,7 +10,7 @@ const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div className="container-fluid form-container">
+    <div className="container-fluid form-container auth-container">
       <form onSubmit={handleSubmit} name={name}>
         {
           name === 'signup' &&
@@ -32,7 +32,10 @@ const AuthForm = (props) => {
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
+      <div className="oaths">
+        <a href="https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback"><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
       {/*<a href="/auth/google">{displayName} with Google</a>*/}
+      </div>
     </div>
   )
 }

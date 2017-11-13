@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import Photos from './Photos'
+import {grabRaceFromStrava} from '../store'
 
 /**
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {name, race, raceCompleted, photos} = props;
+  const {name, race, raceCompleted, photos, queryStrava, stravaId} = props;
   let lat, long;
   if (race.race) {
     lat = race.race.coords[0];
@@ -20,10 +21,10 @@ export const UserHome = (props) => {
       <h3>~ Welcome, {name} ~</h3>
       <div>
       {
-        race.race ?
+        (race.race || race.id) ?
         <div>
         {
-          raceCompleted ?
+          (raceCompleted || stravaId) ?
           <div>
             <h4>Congratulations on Your Race!</h4>
             <p>
@@ -46,6 +47,7 @@ export const UserHome = (props) => {
         :
         <div>
           <h5>Looking for great race medal picture ideas? Click <Link to='/newrace'>here</Link> to add your next race, and come back after the race for inspiration!</h5>
+          { stravaId && <button onClick={queryStrava}>Click Here To Import Your Latest Run From Strava</button> }
         </div>
       }
       </div>
@@ -58,14 +60,24 @@ export const UserHome = (props) => {
  */
 const mapState = (state) => {
   return {
+    user: state.user,
     name: state.user.name || 'Runner',
     race: state.race,
     raceCompleted: state.race.completed,
-    photos: state.photos
+    photos: state.photos,
+    stravaId: state.user.stravaId
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = (dispatch, ownProps) => {
+  return {
+    queryStrava () {
+      dispatch(grabRaceFromStrava(ownProps.userId))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES

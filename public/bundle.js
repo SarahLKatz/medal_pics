@@ -1083,6 +1083,12 @@ module.exports = invariant;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(103);
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
 
 /**
  * Expose `Emitter`.
@@ -1249,7 +1255,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -1862,7 +1868,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1943,19 +1949,10 @@ var _photos2 = _interopRequireDefault(_photos);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var reducer = (0, _redux.combineReducers)({ user: _user2.default, race: _race2.default, location: _location2.default, photos: _photos2.default });
-var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default
-// ,
-// createLogger({collapsed: true})
-));
+var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
 var store = (0, _redux.createStore)(reducer, middleware);
 
 exports.default = store;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(103);
 
 /***/ }),
 /* 15 */
@@ -2696,8 +2693,8 @@ module.exports = defaults;
  * Module dependencies.
  */
 
-var parser = __webpack_require__(12);
-var Emitter = __webpack_require__(11);
+var parser = __webpack_require__(13);
+var Emitter = __webpack_require__(12);
 
 /**
  * Module exports.
@@ -3646,7 +3643,7 @@ if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' 
  */
 
 var debug = __webpack_require__(7)('socket.io-parser');
-var Emitter = __webpack_require__(11);
+var Emitter = __webpack_require__(12);
 var hasBin = __webpack_require__(57);
 var binary = __webpack_require__(214);
 var isBuf = __webpack_require__(92);
@@ -4512,7 +4509,7 @@ function polling (opts) {
 
 var Transport = __webpack_require__(27);
 var parseqs = __webpack_require__(22);
-var parser = __webpack_require__(12);
+var parser = __webpack_require__(13);
 var inherit = __webpack_require__(18);
 var yeast = __webpack_require__(96);
 var debug = __webpack_require__(7)('engine.io-client:polling');
@@ -8125,7 +8122,7 @@ function resolvePathname(to) {
 
 var eio = __webpack_require__(138);
 var Socket = __webpack_require__(91);
-var Emitter = __webpack_require__(11);
+var Emitter = __webpack_require__(12);
 var parser = __webpack_require__(41);
 var on = __webpack_require__(90);
 var bind = __webpack_require__(48);
@@ -8733,7 +8730,7 @@ function on (obj, ev, fn) {
  */
 
 var parser = __webpack_require__(41);
-var Emitter = __webpack_require__(11);
+var Emitter = __webpack_require__(12);
 var toArray = __webpack_require__(219);
 var on = __webpack_require__(90);
 var bind = __webpack_require__(48);
@@ -9600,7 +9597,7 @@ var _history2 = _interopRequireDefault(_history);
 
 var _components = __webpack_require__(122);
 
-var _store = __webpack_require__(13);
+var _store = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9636,7 +9633,7 @@ var Routes = function (_Component) {
           race = _props.race,
           getPictures = _props.getPictures;
 
-      if (race.race) getPictures(race.race.coords);
+      if (race.race) getPictures(race.race.coords);else if (race.id) getPictures(race.coords);
       return _react2.default.createElement(
         _reactRouter.Router,
         { history: _history2.default },
@@ -9651,8 +9648,12 @@ var Routes = function (_Component) {
             isLoggedIn && _react2.default.createElement(
               _reactRouterDom.Switch,
               null,
-              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _components.UserHome }),
-              _react2.default.createElement(_reactRouterDom.Route, { path: '/home', component: _components.UserHome }),
+              _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render() {
+                  return _react2.default.createElement(_components.UserHome, { userId: userId, race: race });
+                } }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/home', render: function render() {
+                  return _react2.default.createElement(_components.UserHome, { userId: userId, race: race });
+                } }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/newrace', render: function render() {
                   return _react2.default.createElement(_components.NewRace, { userId: userId });
                 } })
@@ -9686,7 +9687,13 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     loadInitialData: function loadInitialData() {
       dispatch((0, _store.me)()).then(function (res) {
-        return dispatch((0, _store.getRaceThunk)(res.user.id));
+        console.log('i am me');
+        if (res.user.stravaId) {
+          console.log('i am a strava user');
+          dispatch((0, _store.grabRaceFromStrava)(res.user.id));
+        } else {
+          dispatch((0, _store.getRaceThunk)(res.user.id));
+        }
       }).catch(function (err) {
         return console.error(err);
       });
@@ -10709,9 +10716,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(9);
 
-var _store = __webpack_require__(13);
+var _store = __webpack_require__(14);
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10855,7 +10862,6 @@ var mapDispatch = function mapDispatch(dispatch, ownProps) {
         coords = [location.lat, location.lon];
       }).then(function () {
         race.coords = coords;
-        console.log(race);
         dispatch((0, _store.createRaceThunk)(race));
       }).catch(function (err) {
         return console.error(err);
@@ -10871,7 +10877,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(NewRace);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(__dirname) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10888,7 +10894,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _store = __webpack_require__(13);
+var _store = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10904,7 +10910,7 @@ var AuthForm = function AuthForm(props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'container-fluid form-container' },
+    { className: 'container-fluid form-container auth-container' },
     _react2.default.createElement(
       'form',
       { onSubmit: handleSubmit, name: name },
@@ -10966,6 +10972,15 @@ var AuthForm = function AuthForm(props) {
         error.response.data,
         ' '
       )
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'oaths' },
+      _react2.default.createElement(
+        'a',
+        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback' },
+        _react2.default.createElement('img', { src: __dirname + 'btn_strava_connectwith_light.png' })
+      )
     )
   );
 };
@@ -11021,6 +11036,7 @@ AuthForm.propTypes = {
   handleSubmit: _propTypes2.default.func.isRequired,
   error: _propTypes2.default.object
 };
+/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ }),
 /* 122 */
@@ -11091,7 +11107,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(__dirname) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -11109,7 +11125,7 @@ var _reactRedux = __webpack_require__(9);
 
 var _reactRouterDom = __webpack_require__(38);
 
-var _store = __webpack_require__(13);
+var _store = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11173,6 +11189,36 @@ var Main = function Main(props) {
       'div',
       { className: 'main-content' },
       children
+    ),
+    _react2.default.createElement('hr', null),
+    _react2.default.createElement(
+      'div',
+      { className: 'apis' },
+      _react2.default.createElement(
+        'a',
+        { href: 'http://www.strava.com' },
+        _react2.default.createElement('img', { src: __dirname + 'api_logo_pwrdBy_strava_horiz_light.png' })
+      ),
+      _react2.default.createElement(
+        'span',
+        null,
+        'Photos From ',
+        _react2.default.createElement(
+          'a',
+          { href: 'http://www.flickr.com', target: '_blank' },
+          'Flickr'
+        )
+      ),
+      _react2.default.createElement(
+        'span',
+        null,
+        'Location Information Helped By ',
+        _react2.default.createElement(
+          'a',
+          { href: 'https://nominatim.openstreetmap.org/', target: '_blank' },
+          'Nominatim'
+        )
+      )
     )
   );
 };
@@ -11207,6 +11253,7 @@ Main.propTypes = {
   handleClick: _propTypes2.default.func.isRequired,
   isLoggedIn: _propTypes2.default.bool.isRequired
 };
+/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ }),
 /* 124 */
@@ -11236,6 +11283,8 @@ var _Photos = __webpack_require__(47);
 
 var _Photos2 = _interopRequireDefault(_Photos);
 
+var _store = __webpack_require__(14);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -11245,7 +11294,9 @@ var UserHome = exports.UserHome = function UserHome(props) {
   var name = props.name,
       race = props.race,
       raceCompleted = props.raceCompleted,
-      photos = props.photos;
+      photos = props.photos,
+      queryStrava = props.queryStrava,
+      stravaId = props.stravaId;
 
   var lat = void 0,
       long = void 0;
@@ -11267,10 +11318,10 @@ var UserHome = exports.UserHome = function UserHome(props) {
     _react2.default.createElement(
       'div',
       null,
-      race.race ? _react2.default.createElement(
+      race.race || race.id ? _react2.default.createElement(
         'div',
         null,
-        raceCompleted ? _react2.default.createElement(
+        raceCompleted || stravaId ? _react2.default.createElement(
           'div',
           null,
           _react2.default.createElement(
@@ -11317,6 +11368,11 @@ var UserHome = exports.UserHome = function UserHome(props) {
             'here'
           ),
           ' to add your next race, and come back after the race for inspiration!'
+        ),
+        stravaId && _react2.default.createElement(
+          'button',
+          { onClick: queryStrava },
+          'Click Here To Import Your Latest Run From Strava'
         )
       )
     )
@@ -11328,14 +11384,26 @@ var UserHome = exports.UserHome = function UserHome(props) {
  */
 var mapState = function mapState(state) {
   return {
+    user: state.user,
     name: state.user.name || 'Runner',
     race: state.race,
     raceCompleted: state.race.completed,
-    photos: state.photos
+    photos: state.photos,
+    stravaId: state.user.stravaId
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapState)(UserHome);
+var mapDispatch = function mapDispatch(dispatch, ownProps) {
+  return {
+    queryStrava: function queryStrava() {
+      dispatch((0, _store.grabRaceFromStrava)(ownProps.userId)).then(function (res) {
+        return console.log('post strava thunk', res);
+      });
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(UserHome);
 
 /**
  * PROP TYPES
@@ -11368,7 +11436,7 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRedux = __webpack_require__(9);
 
-var _store = __webpack_require__(13);
+var _store = __webpack_require__(14);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -11416,7 +11484,7 @@ var _history = __webpack_require__(15);
 
 var _history2 = _interopRequireDefault(_history);
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11483,7 +11551,7 @@ exports.default = function () {
   }
 };
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11540,7 +11608,7 @@ var fetchPicturesFromAPI = exports.fetchPicturesFromAPI = function fetchPictures
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getRaceThunk = exports.createRaceThunk = undefined;
+exports.getRaceThunk = exports.grabRaceFromStrava = exports.createRaceThunk = undefined;
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
@@ -11551,12 +11619,14 @@ exports.default = function () {
       return action.race;
     case GET_RACE:
       return action.race;
+    case IMPORT_RACE_FROM_STRAVA:
+      return action.race;
     default:
       return state;
   }
 };
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11570,6 +11640,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * ACTION TYPES
  */
 var CREATE_RACE = 'CREATE_RACE';
+var IMPORT_RACE_FROM_STRAVA = 'IMPORT_RACE_FROM_STRAVA';
 var GET_RACE = 'GET_RACE';
 
 /**
@@ -11583,6 +11654,9 @@ var defaultState = {};
 var createRace = function createRace(race) {
   return { type: CREATE_RACE, race: race };
 };
+var importRaceFromStrava = function importRaceFromStrava(race) {
+  return { type: IMPORT_RACE_FROM_STRAVA, race: race };
+};
 var getRace = function getRace(race) {
   return { type: GET_RACE, race: race };
 };
@@ -11592,9 +11666,31 @@ var getRace = function getRace(race) {
  */
 var createRaceThunk = exports.createRaceThunk = function createRaceThunk(race) {
   return function (dispatch) {
-    return _axios2.default.post('/api/users/' + race.userId + '/races', race).then(function (res) {
+    _axios2.default.post('/api/users/' + race.userId + '/races', race).then(function (res) {
       dispatch(createRace(res.data));
       _history2.default.push('/home');
+    }).catch(function (err) {
+      return console.error(err);
+    });
+  };
+};
+
+var grabRaceFromStrava = exports.grabRaceFromStrava = function grabRaceFromStrava(userId) {
+  return function (dispatch) {
+    return _axios2.default.get('https://www.strava.com/api/v3/athlete/activities', { headers: { 'Authorization': 'Bearer 3612402b0a8ec04b64bb8b9eb4860d89be6c9273' } }).then(function (res) {
+      return res.data[0];
+    }).then(function (stravaData) {
+      _axios2.default.post('/api/users/' + userId + '/races', {
+        name: stravaData.name,
+        date: stravaData.start_date.split('T')[0],
+        start: stravaData.start_date.split('T')[1],
+        location: stravaData.location_country,
+        coords: stravaData.end_latlng,
+        userId: userId
+      }).then(function (res) {
+        dispatch(importRaceFromStrava(res.data));
+        _history2.default.push('/');
+      });
     }).catch(function (err) {
       return console.error(err);
     });
@@ -11641,7 +11737,7 @@ exports.default = function () {
   }
 };
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -12056,7 +12152,7 @@ exports = module.exports = __webpack_require__(49)();
 
 
 // module
-exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
+exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
 
 // exports
 
@@ -12712,7 +12808,7 @@ module.exports = __webpack_require__(139);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(12);
+module.exports.parser = __webpack_require__(13);
 
 
 /***/ }),
@@ -12724,10 +12820,10 @@ module.exports.parser = __webpack_require__(12);
  */
 
 var transports = __webpack_require__(50);
-var Emitter = __webpack_require__(11);
+var Emitter = __webpack_require__(12);
 var debug = __webpack_require__(7)('engine.io-client:socket');
 var index = __webpack_require__(63);
-var parser = __webpack_require__(12);
+var parser = __webpack_require__(13);
 var parseuri = __webpack_require__(65);
 var parseqs = __webpack_require__(22);
 
@@ -12864,7 +12960,7 @@ Socket.protocol = parser.protocol; // this is an int
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(27);
 Socket.transports = __webpack_require__(50);
-Socket.parser = __webpack_require__(12);
+Socket.parser = __webpack_require__(13);
 
 /**
  * Creates transport of the given type.
@@ -13713,7 +13809,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 
 var XMLHttpRequest = __webpack_require__(28);
 var Polling = __webpack_require__(51);
-var Emitter = __webpack_require__(11);
+var Emitter = __webpack_require__(12);
 var inherit = __webpack_require__(18);
 var debug = __webpack_require__(7)('engine.io-client:polling-xhr');
 
@@ -14132,7 +14228,7 @@ function unloadHandler () {
  */
 
 var Transport = __webpack_require__(27);
-var parser = __webpack_require__(12);
+var parser = __webpack_require__(13);
 var parseqs = __webpack_require__(22);
 var inherit = __webpack_require__(18);
 var yeast = __webpack_require__(96);
