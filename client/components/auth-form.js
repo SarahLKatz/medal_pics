@@ -33,7 +33,7 @@ const AuthForm = (props) => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <div className="oaths">
-        <a href="https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://racemedalpics.herokuapp.com/auth/strava/callback"><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
+        <a href="https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=https://racemedalpics.herokuapp.com/auth/strava/callback"><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
       {/*<a href="/auth/google">{displayName} with Google</a>*/}
       </div>
     </div>
