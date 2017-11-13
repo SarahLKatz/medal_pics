@@ -73,7 +73,6 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     queryStrava () {
       dispatch(grabRaceFromStrava(ownProps.userId))
-      .then(res => console.log('post strava thunk', res))
     }
   }
 }
