@@ -53,7 +53,6 @@ body {
     height: 7vh;
     text-align: center;
     margin: 1%;
-    display: none;
 
     img {
       height: 100%;
@@ -67,9 +66,6 @@ body {
     }
   }
 
-  .oaths {
-    display: none;
-  }
 }
 
 @media only screen and (min-width : 768px) {
