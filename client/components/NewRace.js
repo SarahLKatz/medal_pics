@@ -73,7 +73,6 @@ const mapDispatch = (dispatch, ownProps) => {
       })
       .then(() => {
         race.coords = coords;
-        console.log(race)
         dispatch(createRaceThunk(race))
       })
       .catch(err => console.error(err))

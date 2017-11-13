@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, NewRace, Photos} from './components'
-import {me, getRaceThunk, getRaceLocation, fetchPicturesFromAPI} from './store'
+import {me, getRaceThunk, getRaceLocation, grabRaceFromStrava, fetchPicturesFromAPI} from './store'
 
 /**
  * COMPONENT
@@ -18,6 +18,7 @@ class Routes extends Component {
   render () {
     const {isLoggedIn, userId, race, getPictures} = this.props
     if (race.race) getPictures(race.race.coords)
+    else if (race.id) getPictures(race.coords)
     return (
       <Router history={history}>
         <Main>
@@ -29,8 +30,8 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route exact path="/" component={UserHome} />
-                  <Route path="/home" component={UserHome} />
+                  <Route exact path="/" render={() => <UserHome userId={userId} race={race}/>} />
+                  <Route path="/home" render={() => <UserHome userId={userId} race={race}/>} />
                   <Route path="/newrace" render={() => <NewRace userId={userId} />} />
                 </Switch>
             }
@@ -61,7 +62,13 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       .then(res => {
-        return dispatch(getRaceThunk(res.user.id))
+        console.log('i am me')
+        if (res.user.stravaId) {
+          console.log('i am a strava user')
+          dispatch(grabRaceFromStrava(res.user.id))
+        } else {
+          dispatch(getRaceThunk(res.user.id))
+        }
       })
       .catch(err => console.error(err))
     },
