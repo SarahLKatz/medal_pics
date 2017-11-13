@@ -35,10 +35,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     const name = profile.displayName
     const email = profile.emails[0].value
 
-    User.find({where: {stravaId}})
+    User.find({where: {googleId}})
       .then(foundUser => (foundUser
         ? done(null, foundUser)
-        : User.create({name, email, stravaId})
+        : User.create({name, email, googleId})
           .then(createdUser => done(null, createdUser))
       ))
       .catch(done)
