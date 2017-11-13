@@ -10871,7 +10871,7 @@ exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(NewRace);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(__dirname) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10904,7 +10904,7 @@ var AuthForm = function AuthForm(props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'container-fluid form-container' },
+    { className: 'container-fluid form-container auth-container' },
     _react2.default.createElement(
       'form',
       { onSubmit: handleSubmit, name: name },
@@ -10968,10 +10968,13 @@ var AuthForm = function AuthForm(props) {
       )
     ),
     _react2.default.createElement(
-      'a',
-      { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback' },
-      displayName,
-      ' with Strava'
+      'div',
+      { className: 'oaths' },
+      _react2.default.createElement(
+        'a',
+        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback' },
+        _react2.default.createElement('img', { src: __dirname + 'btn_strava_connectwith_light.png' })
+      )
     )
   );
 };
@@ -11027,6 +11030,7 @@ AuthForm.propTypes = {
   handleSubmit: _propTypes2.default.func.isRequired,
   error: _propTypes2.default.object
 };
+/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ }),
 /* 122 */
@@ -11097,7 +11101,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(__dirname) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -11179,6 +11183,36 @@ var Main = function Main(props) {
       'div',
       { className: 'main-content' },
       children
+    ),
+    _react2.default.createElement('hr', null),
+    _react2.default.createElement(
+      'div',
+      { className: 'apis' },
+      _react2.default.createElement(
+        'a',
+        { href: 'http://www.strava.com' },
+        _react2.default.createElement('img', { src: __dirname + 'api_logo_pwrdBy_strava_horiz_light.png' })
+      ),
+      _react2.default.createElement(
+        'span',
+        null,
+        'Photos From ',
+        _react2.default.createElement(
+          'a',
+          { href: 'http://www.flickr.com', target: '_blank' },
+          'Flickr'
+        )
+      ),
+      _react2.default.createElement(
+        'span',
+        null,
+        'Location Information Helped By ',
+        _react2.default.createElement(
+          'a',
+          { href: 'https://nominatim.openstreetmap.org/', target: '_blank' },
+          'Nominatim'
+        )
+      )
     )
   );
 };
@@ -11213,6 +11247,7 @@ Main.propTypes = {
   handleClick: _propTypes2.default.func.isRequired,
   isLoggedIn: _propTypes2.default.bool.isRequired
 };
+/* WEBPACK VAR INJECTION */}.call(exports, "/"))
 
 /***/ }),
 /* 124 */
@@ -12062,7 +12097,7 @@ exports = module.exports = __webpack_require__(49)();
 
 
 // module
-exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
+exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
 
 // exports
 

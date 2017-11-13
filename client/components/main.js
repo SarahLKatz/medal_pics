@@ -35,6 +35,12 @@ const Main = (props) => {
       <div className="main-content">
         {children}
       </div>
+      <hr />
+      <div className="apis">
+        <a href="http://www.strava.com"><img src={__dirname + 'api_logo_pwrdBy_strava_horiz_light.png'} /></a>
+        <span>Photos From <a href="http://www.flickr.com" target="_blank">Flickr</a></span>
+        <span>Location Information Helped By <a href="https://nominatim.openstreetmap.org/" target="_blank">Nominatim</a></span>
+      </div>
     </div>
   )
 }
