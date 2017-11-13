@@ -53,6 +53,7 @@ body {
     height: 7vh;
     text-align: center;
     margin: 1%;
+    display: none;
 
     img {
       height: 100%;
@@ -64,6 +65,10 @@ body {
       padding-right: 3%;
       font-size: 1em;
     }
+  }
+
+  .oaths {
+    display: none;
   }
 }
 

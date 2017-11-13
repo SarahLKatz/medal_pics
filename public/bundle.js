@@ -1083,7 +1083,90 @@ module.exports = invariant;
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(103);
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _user = __webpack_require__(129);
+
+Object.keys(_user).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _user[key];
+    }
+  });
+});
+
+var _race = __webpack_require__(128);
+
+Object.keys(_race).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _race[key];
+    }
+  });
+});
+
+var _location = __webpack_require__(126);
+
+Object.keys(_location).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _location[key];
+    }
+  });
+});
+
+var _photos = __webpack_require__(127);
+
+Object.keys(_photos).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _photos[key];
+    }
+  });
+});
+
+var _redux = __webpack_require__(40);
+
+var _reduxLogger = __webpack_require__(207);
+
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+var _reduxThunk = __webpack_require__(208);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _reduxDevtoolsExtension = __webpack_require__(203);
+
+var _user2 = _interopRequireDefault(_user);
+
+var _race2 = _interopRequireDefault(_race);
+
+var _location2 = _interopRequireDefault(_location);
+
+var _photos2 = _interopRequireDefault(_photos);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var reducer = (0, _redux.combineReducers)({ user: _user2.default, race: _race2.default, location: _location2.default, photos: _photos2.default });
+var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default
+// , createLogger({collapsed: true})
+));
+var store = (0, _redux.createStore)(reducer, middleware);
+
+exports.default = store;
 
 /***/ }),
 /* 12 */
@@ -1871,88 +1954,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _user = __webpack_require__(129);
-
-Object.keys(_user).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _user[key];
-    }
-  });
-});
-
-var _race = __webpack_require__(128);
-
-Object.keys(_race).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _race[key];
-    }
-  });
-});
-
-var _location = __webpack_require__(126);
-
-Object.keys(_location).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _location[key];
-    }
-  });
-});
-
-var _photos = __webpack_require__(127);
-
-Object.keys(_photos).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _photos[key];
-    }
-  });
-});
-
-var _redux = __webpack_require__(40);
-
-var _reduxLogger = __webpack_require__(207);
-
-var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
-var _reduxThunk = __webpack_require__(208);
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-var _reduxDevtoolsExtension = __webpack_require__(203);
-
-var _user2 = _interopRequireDefault(_user);
-
-var _race2 = _interopRequireDefault(_race);
-
-var _location2 = _interopRequireDefault(_location);
-
-var _photos2 = _interopRequireDefault(_photos);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var reducer = (0, _redux.combineReducers)({ user: _user2.default, race: _race2.default, location: _location2.default, photos: _photos2.default });
-var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
-var store = (0, _redux.createStore)(reducer, middleware);
-
-exports.default = store;
+module.exports = __webpack_require__(103);
 
 /***/ }),
 /* 15 */
@@ -9597,7 +9599,7 @@ var _history2 = _interopRequireDefault(_history);
 
 var _components = __webpack_require__(122);
 
-var _store = __webpack_require__(14);
+var _store = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9687,9 +9689,7 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     loadInitialData: function loadInitialData() {
       dispatch((0, _store.me)()).then(function (res) {
-        console.log('i am me');
         if (res.user.stravaId) {
-          console.log('i am a strava user');
           dispatch((0, _store.grabRaceFromStrava)(res.user.id));
         } else {
           dispatch((0, _store.getRaceThunk)(res.user.id));
@@ -10716,9 +10716,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(9);
 
-var _store = __webpack_require__(14);
+var _store = __webpack_require__(11);
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -10894,7 +10894,7 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _store = __webpack_require__(14);
+var _store = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10978,7 +10978,7 @@ var AuthForm = function AuthForm(props) {
       { className: 'oaths' },
       _react2.default.createElement(
         'a',
-        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback' },
+        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=https://racemedalpics.herokuapp.com/auth/strava/callback' },
         _react2.default.createElement('img', { src: __dirname + 'btn_strava_connectwith_light.png' })
       )
     )
@@ -11125,7 +11125,7 @@ var _reactRedux = __webpack_require__(9);
 
 var _reactRouterDom = __webpack_require__(38);
 
-var _store = __webpack_require__(14);
+var _store = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11283,7 +11283,7 @@ var _Photos = __webpack_require__(47);
 
 var _Photos2 = _interopRequireDefault(_Photos);
 
-var _store = __webpack_require__(14);
+var _store = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11396,9 +11396,7 @@ var mapState = function mapState(state) {
 var mapDispatch = function mapDispatch(dispatch, ownProps) {
   return {
     queryStrava: function queryStrava() {
-      dispatch((0, _store.grabRaceFromStrava)(ownProps.userId)).then(function (res) {
-        return console.log('post strava thunk', res);
-      });
+      dispatch((0, _store.grabRaceFromStrava)(ownProps.userId));
     }
   };
 };
@@ -11436,7 +11434,7 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRedux = __webpack_require__(9);
 
-var _store = __webpack_require__(14);
+var _store = __webpack_require__(11);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -11484,7 +11482,7 @@ var _history = __webpack_require__(15);
 
 var _history2 = _interopRequireDefault(_history);
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11551,7 +11549,7 @@ exports.default = function () {
   }
 };
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11626,7 +11624,7 @@ exports.default = function () {
   }
 };
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -11737,7 +11735,7 @@ exports.default = function () {
   }
 };
 
-var _axios = __webpack_require__(11);
+var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -12152,7 +12150,7 @@ exports = module.exports = __webpack_require__(49)();
 
 
 // module
-exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
+exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%;\n    display: none; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n  body .oaths {\n    display: none; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
 
 // exports
 
