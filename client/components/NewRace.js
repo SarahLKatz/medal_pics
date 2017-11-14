@@ -54,6 +54,7 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
+  console.log(ownProps)
   return {
     submitRace(e) {
       e.preventDefault();
@@ -66,7 +67,7 @@ const mapDispatch = (dispatch, ownProps) => {
         userId: ownProps.userId
       }
       let coords;
-      axios.get(`http://nominatim.openstreetmap.org/search?format=json&q=${e.target.raceLocale.value}`)
+      axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${e.target.raceLocale.value}`)
       .then(res => {
         const location = res.data[0];
         coords = [location.lat, location.lon];

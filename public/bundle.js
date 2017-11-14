@@ -10845,6 +10845,7 @@ var mapState = function mapState(state) {
 };
 
 var mapDispatch = function mapDispatch(dispatch, ownProps) {
+  console.log(ownProps);
   return {
     submitRace: function submitRace(e) {
       e.preventDefault();
@@ -10857,7 +10858,7 @@ var mapDispatch = function mapDispatch(dispatch, ownProps) {
         userId: ownProps.userId
       };
       var coords = void 0;
-      _axios2.default.get('http://nominatim.openstreetmap.org/search?format=json&q=' + e.target.raceLocale.value).then(function (res) {
+      _axios2.default.get('https://nominatim.openstreetmap.org/search?format=json&q=' + e.target.raceLocale.value).then(function (res) {
         var location = res.data[0];
         coords = [location.lat, location.lon];
       }).then(function () {
@@ -10978,7 +10979,7 @@ var AuthForm = function AuthForm(props) {
       { className: 'oaths' },
       _react2.default.createElement(
         'a',
-        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=https://racemedalpics.herokuapp.com/auth/strava/callback' },
+        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback' },
         _react2.default.createElement('img', { src: __dirname + 'btn_strava_connectwith_light.png' })
       )
     )
@@ -11585,6 +11586,7 @@ var fetchPicturesFromAPI = exports.fetchPicturesFromAPI = function fetchPictures
       var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2f859e87cf731ecfe3d71d92d0daa62b&tags=landmarks&lat=' + location[0] + '&lon=' + location[1] + '&per_page=25&format=json&nojsoncallback=1';
       _axios2.default.get(url).then(function (res) {
         dispatch(fetchPictures(res.data.photos.photo));
+        _history2.default.push('/home');
       }).catch(function (err) {
         return console.error(err);
       });
@@ -12150,7 +12152,7 @@ exports = module.exports = __webpack_require__(49)();
 
 
 // module
-exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%;\n    display: none; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n  body .oaths {\n    display: none; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
+exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 5vh;\n    text-align: center;\n    margin: 1%; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
 
 // exports
 
