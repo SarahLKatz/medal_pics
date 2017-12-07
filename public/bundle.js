@@ -10727,6 +10727,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var NewRace = function NewRace(props) {
   var submitRace = props.submitRace;
 
+  var hours = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  var minutes = [];
+  var finishHours = [];
+  for (var i = 0; i < 60; i++) {
+    if (i < 10) {
+      minutes.push('0' + i);
+      finishHours.push('0' + i);
+    } else if (i < 24) {
+      minutes.push(i);
+      finishHours.push(i);
+    } else {
+      minutes.push(i);
+    }
+  }
 
   return _react2.default.createElement(
     'div',
@@ -10778,11 +10792,41 @@ var NewRace = function NewRace(props) {
             null,
             'Race Start Time: '
           ),
-          _react2.default.createElement('input', { name: 'raceStart', type: 'text' }),
           _react2.default.createElement(
-            'small',
-            { className: 'comments' },
-            '(HH:MM 24-hour format)'
+            'select',
+            { className: 'time-select', name: 'hour' },
+            hours.map(function (hour) {
+              return _react2.default.createElement(
+                'option',
+                { key: hour, value: hour },
+                hour
+              );
+            })
+          ),
+          _react2.default.createElement(
+            'select',
+            { className: 'time-select', name: 'mins' },
+            minutes.map(function (minute) {
+              return _react2.default.createElement(
+                'option',
+                { key: minute, value: minute },
+                minute
+              );
+            })
+          ),
+          _react2.default.createElement(
+            'select',
+            { name: 'amPm' },
+            _react2.default.createElement(
+              'option',
+              { value: 'AM' },
+              'AM'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: 'PM' },
+              'PM'
+            )
           )
         )
       ),
@@ -10816,11 +10860,38 @@ var NewRace = function NewRace(props) {
             null,
             'Estimated Completion Time: '
           ),
-          _react2.default.createElement('input', { name: 'finishTime', type: 'text' }),
           _react2.default.createElement(
-            'small',
-            { className: 'comments' },
-            '(HH:MM:SS format)'
+            'select',
+            { className: 'time-select', name: 'finishHour' },
+            finishHours.map(function (hour) {
+              return _react2.default.createElement(
+                'option',
+                { key: hour, value: hour },
+                hour
+              );
+            })
+          ),
+          _react2.default.createElement(
+            'select',
+            { className: 'time-select', name: 'finishMin' },
+            minutes.map(function (minute) {
+              return _react2.default.createElement(
+                'option',
+                { key: minute, value: minute },
+                minute
+              );
+            })
+          ),
+          _react2.default.createElement(
+            'select',
+            { className: 'time-select', name: 'finishSec' },
+            minutes.map(function (second) {
+              return _react2.default.createElement(
+                'option',
+                { key: second, value: second },
+                second
+              );
+            })
           )
         )
       ),
@@ -10837,27 +10908,27 @@ var NewRace = function NewRace(props) {
   );
 };
 
-var mapState = function mapState(state) {
-  return {
-    userId: state.user.id,
-    race: state.race
-  };
-};
-
 var mapDispatch = function mapDispatch(dispatch, ownProps) {
   return {
     submitRace: function submitRace(e) {
       e.preventDefault();
+      var startTime = void 0;
+      if (e.target.amPm.value === 'PM') {
+        startTime = +e.target.hour.value + 12 + ':' + e.target.mins.value;
+      } else {
+        startTime = e.target.hour.value + ':' + e.target.mins.value;
+      }
+      var completionTime = e.target.finishHour.value + ':' + e.target.finishMin.value + ':' + e.target.finishSec.value;
       var race = {
         name: e.target.raceName.value,
         date: e.target.raceDate.value,
-        start: e.target.raceStart.value,
+        start: startTime,
         location: e.target.raceLocale.value,
-        completionTime: e.target.finishTime.value,
+        completionTime: completionTime,
         userId: ownProps.userId
       };
       var coords = void 0;
-      _axios2.default.get('http://nominatim.openstreetmap.org/search?format=json&q=' + e.target.raceLocale.value).then(function (res) {
+      _axios2.default.get('https://nominatim.openstreetmap.org/search?format=json&q=' + e.target.raceLocale.value).then(function (res) {
         var location = res.data[0];
         coords = [location.lat, location.lon];
       }).then(function () {
@@ -10870,7 +10941,9 @@ var mapDispatch = function mapDispatch(dispatch, ownProps) {
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(NewRace);
+exports.default = (0, _reactRedux.connect)(function () {
+  return {};
+}, mapDispatch)(NewRace);
 
 /***/ }),
 /* 121 */
@@ -10978,7 +11051,7 @@ var AuthForm = function AuthForm(props) {
       { className: 'oaths' },
       _react2.default.createElement(
         'a',
-        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://localhost:8080/auth/strava/callback' },
+        { href: 'https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=https://racemedalpics.herokuapp.com/auth/strava/callback' },
         _react2.default.createElement('img', { src: __dirname + 'btn_strava_connectwith_light.png' })
       )
     )
@@ -12150,7 +12223,7 @@ exports = module.exports = __webpack_require__(49)();
 
 
 // module
-exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%;\n    display: none; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
+exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #CCCFFF;\n    padding: 2%; }\n  body .main-content {\n    background-color: #CCCFFF; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCCFFF; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%;\n    display: none; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n  body .oaths {\n    display: none; }\n  body .time-select {\n    margin-right: 0.2em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
 
 // exports
 
