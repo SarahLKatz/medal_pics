@@ -10728,19 +10728,7 @@ var NewRace = function NewRace(props) {
   var submitRace = props.submitRace;
 
   var hours = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  var minutes = [];
-  var finishHours = [];
-  for (var i = 0; i < 60; i++) {
-    if (i < 10) {
-      minutes.push('0' + i);
-      finishHours.push('0' + i);
-    } else if (i < 24) {
-      minutes.push(i);
-      finishHours.push(i);
-    } else {
-      minutes.push(i);
-    }
-  }
+  var minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
 
   return _react2.default.createElement(
     'div',
@@ -10860,38 +10848,13 @@ var NewRace = function NewRace(props) {
             null,
             'Estimated Completion Time: '
           ),
+          _react2.default.createElement('input', { className: 'time-select', name: 'finishHour', type: 'text', size: '2' }),
+          _react2.default.createElement('input', { className: 'time-select', name: 'finishMin', type: 'text', size: '2' }),
+          _react2.default.createElement('input', { className: 'time-select', name: 'finishSec', type: 'text', size: '2' }),
           _react2.default.createElement(
-            'select',
-            { className: 'time-select', name: 'finishHour' },
-            finishHours.map(function (hour) {
-              return _react2.default.createElement(
-                'option',
-                { key: hour, value: hour },
-                hour
-              );
-            })
-          ),
-          _react2.default.createElement(
-            'select',
-            { className: 'time-select', name: 'finishMin' },
-            minutes.map(function (minute) {
-              return _react2.default.createElement(
-                'option',
-                { key: minute, value: minute },
-                minute
-              );
-            })
-          ),
-          _react2.default.createElement(
-            'select',
-            { className: 'time-select', name: 'finishSec' },
-            minutes.map(function (second) {
-              return _react2.default.createElement(
-                'option',
-                { key: second, value: second },
-                second
-              );
-            })
+            'small',
+            { className: 'comments' },
+            '(HH:MM:SS)'
           )
         )
       ),

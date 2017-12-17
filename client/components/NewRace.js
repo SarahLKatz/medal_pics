@@ -6,19 +6,7 @@ import axios from 'axios';
 const NewRace = (props) => {
   const { submitRace } = props;
   let hours = [12,1,2,3,4,5,6,7,8,9,10,11];
-  let minutes = [];
-  let finishHours = [];
-  for (let i = 0; i < 60; i++) {
-    if (i < 10) {
-      minutes.push('0' + i)
-      finishHours.push('0' + i)
-    } else if (i < 24) {
-      minutes.push(i)
-      finishHours.push(i)
-    } else {
-      minutes.push(i)
-    }
-  }
+  let minutes = ['00','05','10','15','20','25','30','35','40','45','50','55'];
 
   return(
       <div className="container">
@@ -60,23 +48,10 @@ const NewRace = (props) => {
           </div>
           <div className="form-group col-xs-12">
             <label htmlFor="finishTime"><small>Estimated Completion Time: </small>
-              <select className="time-select" name="finishHour">
-                {
-                  finishHours.map(hour => <option key={hour} value={hour}>{hour}</option>)
-                }
-              </select>
-              <select className="time-select" name="finishMin">
-                {
-                  minutes.map(minute => <option key={minute} value={minute}>{minute}</option>)
-                }
-              </select>
-              <select className="time-select" name="finishSec">
-                {
-                  minutes.map(second => <option key={second} value={second}>{second}</option>)
-                }
-              </select>
-              {/*<input name="finishTime" type="text" />
-              <small className="comments">(HH:MM:SS format)</small>*/}
+            <input className="time-select" name="finishHour" type="text" size="2" />
+            <input className="time-select" name="finishMin" type="text" size="2" />
+            <input className="time-select" name="finishSec" type="text" size="2" />
+            <small className="comments">(HH:MM:SS)</small>
             </label>
           </div>
           <div className="form-group col-xs-12">
