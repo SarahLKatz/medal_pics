@@ -40,5 +40,5 @@ Race.prototype.isCompleted = function () {
   const hour = startBreakdown[0]+ (finishBreakdown[0]) ;
   const min = (startBreakdown[1]) + (finishBreakdown[1]);
   const raceOver = moment({ y: dateBreakdown[0], M :dateBreakdown[1]-1, d :dateBreakdown[2], h : hour, m :min, s: finishBreakdown[2]});
-  return now > raceOver
+  return moment(raceOver).fromNow().includes('ago');
 }

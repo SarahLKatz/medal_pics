@@ -4,17 +4,25 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import Photos from './Photos'
 import {grabRaceFromStrava} from '../store'
+import moment from 'moment';
 
 /**
  * COMPONENT
  */
 export const UserHome = (props) => {
   const {name, race, raceCompleted, photos, queryStrava, stravaId} = props;
-  let lat, long;
+  let lat, long, raceName, raceDate;
   if (race.race) {
     lat = race.race.coords[0];
     long = race.race.coords[1];
+    raceName = race.race.name;
+    raceDate = moment(race.race.date).format("dddd, MMMM Do, YYYY");
+  } else if (race) {
+    raceName = race.name;
+    raceDate = moment(race.date).format("dddd, MMMM Do, YYYY")
   }
+
+  console.log(raceCompleted, raceName, raceDate)
 
   return (
     <div className="col-xs-12 text-center main-content">
@@ -26,7 +34,7 @@ export const UserHome = (props) => {
         {
           (raceCompleted || stravaId) ?
           <div>
-            <h4>Congratulations on Your Race!</h4>
+            <h4>Congratulations on Your Race, {race.race.name}!</h4>
             <p>
               Looking to take some awesome post-race medal pictures? Here are some pictures taken nearby that you can use for inspiration:
             </p>
@@ -40,7 +48,7 @@ export const UserHome = (props) => {
           </div>
           :
           <div>
-            <h4>Good Luck on Your Race! Run Awesome!</h4>
+            <h4>Good Luck on Your Race, {raceName} on {raceDate}! Run Awesome!</h4>
           </div>
         }
         </div>
