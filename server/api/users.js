@@ -14,7 +14,7 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id/races', (req,res,next) => {
+router.get('/:id/last', (req,res,next) => {
   Race.findAll({
     where: {
       userId: req.params.id
@@ -22,8 +22,8 @@ router.get('/:id/races', (req,res,next) => {
   })
     .then(races => {
       if (races.length){
-        races.sort((a,b) => a.date > b.date);
-        const lastRace = races[races.length-1];
+        let completedRaces = races.filter(race => race.isCompleted()).sort((a,b) => a.date > b.date);
+        const lastRace = completedRaces[completedRaces.length-1];
         res.json({
           race: lastRace,
           completed: lastRace.isCompleted()
