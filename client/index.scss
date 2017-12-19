@@ -49,6 +49,16 @@ body {
     }
   }
 
+  .allRaces {
+    padding: 1%; 
+    font-weight: bold;
+
+    .allRaces-race {
+      font-size: 1em;
+      font-weight: normal;
+    }
+  }
+
   .apis {
     height: 7vh;
     text-align: center;

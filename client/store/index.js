@@ -4,10 +4,11 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
 import race from './race'
+import allRaces from './allRaces'
 import location from './location'
 import photos from './photos'
 
-const reducer = combineReducers({user, race, location, photos})
+const reducer = combineReducers({user, race, allRaces, location, photos})
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware
   // , createLogger({collapsed: true})

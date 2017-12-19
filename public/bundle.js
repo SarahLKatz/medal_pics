@@ -5675,13 +5675,17 @@ var _user2 = _interopRequireDefault(_user);
 
 var _race2 = _interopRequireDefault(_race);
 
+var _allRaces = __webpack_require__(342);
+
+var _allRaces2 = _interopRequireDefault(_allRaces);
+
 var _location2 = _interopRequireDefault(_location);
 
 var _photos2 = _interopRequireDefault(_photos);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reducer = (0, _redux.combineReducers)({ user: _user2.default, race: _race2.default, location: _location2.default, photos: _photos2.default });
+var reducer = (0, _redux.combineReducers)({ user: _user2.default, race: _race2.default, allRaces: _allRaces2.default, location: _location2.default, photos: _photos2.default });
 var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default
 // , createLogger({collapsed: true})
 ));
@@ -25590,6 +25594,9 @@ var Routes = function (_Component) {
                 } }),
               _react2.default.createElement(_reactRouterDom.Route, { path: '/newrace', render: function render() {
                   return _react2.default.createElement(_components.NewRace, { userId: userId });
+                } }),
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/allraces', render: function render() {
+                  return _react2.default.createElement(_components.AllRaces, { userId: userId });
                 } })
             ),
             _react2.default.createElement(_reactRouterDom.Route, { component: _components.Login })
@@ -27059,6 +27066,15 @@ Object.defineProperty(exports, 'NewRace', {
   }
 });
 
+var _AllRaces = __webpack_require__(341);
+
+Object.defineProperty(exports, 'AllRaces', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_AllRaces).default;
+  }
+});
+
 var _Photos = __webpack_require__(49);
 
 Object.defineProperty(exports, 'Photos', {
@@ -27132,6 +27148,11 @@ var Main = function Main(props) {
           _reactRouterDom.Link,
           { to: '/newrace' },
           'Add A Race'
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/allraces' },
+          'My Races'
         ),
         _react2.default.createElement(
           'a',
@@ -27651,7 +27672,7 @@ var createRaceThunk = exports.createRaceThunk = function createRaceThunk(race) {
   return function (dispatch) {
     _axios2.default.post('/api/users/' + race.userId + '/races', race).then(function (res) {
       dispatch(createRace(res.data));
-      _history2.default.push('/');
+      _history2.default.push('/allraces');
     }).catch(function (err) {
       return console.error(err);
     });
@@ -28135,7 +28156,7 @@ exports = module.exports = __webpack_require__(51)();
 
 
 // module
-exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #DDDDDD;\n    padding: 2%; }\n  body .main-content {\n    background-color: #EEE; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCC; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%;\n    display: none; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n  body .oaths {\n    display: none; }\n  body .time-select {\n    margin-right: 0.2em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
+exports.push([module.i, "body {\n  font-family: sans-serif; }\n  body a {\n    text-decoration: none; }\n  body label {\n    display: block; }\n  body .container {\n    border: 1px solid #DDDDDD;\n    padding: 2%; }\n  body .main-content {\n    background-color: #EEE; }\n  body nav a {\n    display: inline-block;\n    margin: 0.25em 1em;\n    color: #CCC; }\n  body .nav-top {\n    font-size: 2.5vh;\n    border-bottom: 1px solid #DDD; }\n  body .auth-container {\n    display: flex;\n    justify-content: space-between; }\n  body form div {\n    display: inline-block; }\n    body form div .add-race .comments {\n      display: block;\n      width: 100vw;\n      color: red; }\n  body .allRaces {\n    padding: 1%;\n    font-weight: bold; }\n    body .allRaces .allRaces-race {\n      font-size: 1em;\n      font-weight: normal; }\n  body .apis {\n    height: 7vh;\n    text-align: center;\n    margin: 1%;\n    display: none; }\n    body .apis img {\n      height: 100%;\n      padding-right: 3%; }\n    body .apis span {\n      height: 100%;\n      padding-right: 3%;\n      font-size: 1em; }\n  body .oaths {\n    display: none; }\n  body .time-select {\n    margin-right: 0.2em; }\n\n@media only screen and (min-width: 768px) {\n  .add-race .comments {\n    display: inline;\n    margin-left: 1%; } }\n", ""]);
 
 // exports
 
@@ -56415,6 +56436,214 @@ function toArray(list, index) {
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 341 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(10);
+
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _axios = __webpack_require__(15);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _allRaces = __webpack_require__(342);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AllRaces = function AllRaces(props) {
+  var completedRaces = props.completedRaces,
+      upcomingRaces = props.upcomingRaces,
+      getAllRaces = props.getAllRaces;
+
+  if (!completedRaces.length && !upcomingRaces.length) getAllRaces();
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'allRaces' },
+    completedRaces.length > 0 && _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'h4',
+        null,
+        'Completed Races'
+      ),
+      _react2.default.createElement(
+        'ul',
+        null,
+        completedRaces.map(function (race) {
+          return _react2.default.createElement(
+            'li',
+            { key: race.id, className: 'allRaces-race' },
+            race.name,
+            ' (',
+            (0, _moment2.default)(race.date).format("MM/DD/YY"),
+            ') ~ ',
+            _react2.default.createElement(
+              'a',
+              { href: 'http://www.shothotspot.com/hotspots/?nelng=' + (race.coords[1] + .005) + '&nelat=' + (race.coords[0] + .005) + '&swlat=' + (race.coords[0] - .005) + '&swlng=' + (race.coords[1] - .005) },
+              'Nearby Photo Spots'
+            ),
+            ' ~ ',
+            _react2.default.createElement(
+              'a',
+              { onClick: function onClick() {
+                  return props.deleteRace(race.id);
+                } },
+              'Delete Race'
+            )
+          );
+        })
+      )
+    ),
+    upcomingRaces.length > 0 && _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'h4',
+        null,
+        'Upcoming Races'
+      ),
+      _react2.default.createElement(
+        'ul',
+        null,
+        upcomingRaces.map(function (race) {
+          return _react2.default.createElement(
+            'li',
+            { key: race.id, className: 'allRaces-race' },
+            race.name,
+            ' (',
+            (0, _moment2.default)(race.date).format("MM/DD/YY"),
+            ') ~ Goal: ',
+            race.completionTime,
+            ' ~ ',
+            _react2.default.createElement(
+              'a',
+              { onClick: function onClick() {
+                  return props.deleteRace(race.id);
+                } },
+              'Delete Race'
+            )
+          );
+        })
+      )
+    ),
+    upcomingRaces.length === 0 && completedRaces.length === 0 && _react2.default.createElement(
+      'h4',
+      null,
+      _react2.default.createElement(
+        'a',
+        { href: '/newrace' },
+        'Add a Race'
+      )
+    )
+  );
+};
+
+var mapState = function mapState(state) {
+  return {
+    completedRaces: state.allRaces.completed || [],
+    upcomingRaces: state.allRaces.upcoming || []
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch, ownProps) {
+  return {
+    getAllRaces: function getAllRaces() {
+      return dispatch((0, _allRaces.getAllRacesThunk)(ownProps.userId));
+    },
+    deleteRace: function deleteRace(raceId) {
+      _axios2.default.delete('api/users/' + ownProps.userId + '/race/' + raceId);
+      dispatch((0, _allRaces.getAllRacesThunk)(ownProps.userId));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(AllRaces);
+
+/***/ }),
+/* 342 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getAllRacesThunk = undefined;
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case GET_ALL_RACES:
+      return action.allRaces;
+    default:
+      return state;
+  }
+};
+
+var _axios = __webpack_require__(15);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _history = __webpack_require__(16);
+
+var _history2 = _interopRequireDefault(_history);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * ACTION TYPES
+ */
+var GET_ALL_RACES = 'GET_ALL_RACES';
+
+/**
+ * INITIAL STATE
+ */
+var defaultState = {};
+
+/**
+ * ACTION CREATORS
+ */
+var getAllRaces = function getAllRaces(allRaces) {
+  return { type: GET_ALL_RACES, allRaces: allRaces };
+};
+
+/**
+ * THUNK CREATORS
+ */
+var getAllRacesThunk = exports.getAllRacesThunk = function getAllRacesThunk(userId) {
+  return function (dispatch) {
+    _axios2.default.get('/api/users/' + userId + '/races').then(function (res) {
+      dispatch(getAllRaces(res.data));
+    }).catch(function (err) {
+      return console.error(err);
+    });
+  };
+};
+
+/**
+ * REDUCER
+ */
 
 /***/ })
 /******/ ]);
