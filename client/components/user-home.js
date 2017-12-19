@@ -19,10 +19,8 @@ export const UserHome = (props) => {
     raceDate = moment(race.race.date).format("dddd, MMMM Do, YYYY");
   } else if (race) {
     raceName = race.name;
-    raceDate = moment(race.date).format("dddd, MMMM Do, YYYY")
+    raceDate = moment(race.date).format("dddd, MMMM Do, YYYY");
   }
-
-  console.log(raceCompleted, raceName, raceDate)
 
   return (
     <div className="col-xs-12 text-center main-content">
