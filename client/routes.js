@@ -4,7 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, NewRace, Photos} from './components'
+import {Main, Login, Signup, UserHome, NewRace, AllRaces, Photos} from './components'
 import {me, getRaceThunk, getRaceLocation, grabRaceFromStrava, fetchPicturesFromAPI} from './store'
 
 /**
@@ -33,6 +33,7 @@ class Routes extends Component {
                   <Route exact path="/" render={() => <UserHome userId={userId} race={race}/>} />
                   <Route path="/home" render={() => <UserHome userId={userId} race={race}/>} />
                   <Route path="/newrace" render={() => <NewRace userId={userId} />} />
+                  <Route path="/allraces" render={() => <AllRaces userId={userId} />} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}

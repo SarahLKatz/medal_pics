@@ -22,11 +22,38 @@ router.get('/:id/last', (req,res,next) => {
   })
     .then(races => {
       if (races.length){
-        let completedRaces = races.filter(race => race.isCompleted()).sort((a,b) => a.date > b.date);
-        const lastRace = completedRaces[completedRaces.length-1];
+        let pastRaces = races.filter(race => race.isCompleted()).sort((a,b) => a.date > b.date);
+        const lastRace = pastRaces[pastRaces.length-1];
         res.json({
           race: lastRace,
           completed: lastRace.isCompleted()
+        })
+      } else {
+        res.json({})
+      }
+    })
+})
+
+router.get('/:id/races', (req,res,next) => {
+  Race.findAll({
+    where: {
+      userId: req.params.id
+    }
+  })
+    .then(races => {
+      if (races.length){
+        let completedRaces = [];
+        let upcomingRaces = [];
+        for (let i = 0; i < races.length; i++) {
+          if (races[i].isCompleted()) {
+            completedRaces.push(races[i])
+          } else {
+            upcomingRaces.push(races[i])
+          }
+        }
+        res.json({
+          completed: completedRaces,
+          upcoming: upcomingRaces
         })
       } else {
         res.json({})
