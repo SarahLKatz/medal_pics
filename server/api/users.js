@@ -65,3 +65,16 @@ router.post('/:id/races', (req, res, next) => {
   Race.create(req.body)
   .then(race => res.json(race))
 })
+
+router.delete('/:id/race/:raceId', (req,res,next) => {
+  Race.findOne({
+    where: {
+      userId: req.params.id,
+      id: req.params.raceId
+    }
+  })
+  .then(race => {
+    race.destroy()
+    res.json({})
+  })
+})

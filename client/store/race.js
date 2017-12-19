@@ -28,7 +28,7 @@ export const createRaceThunk = (race) =>
       axios.post(`/api/users/${race.userId}/races`, race)
         .then(res => {
           dispatch(createRace(res.data))
-          history.push('/')
+          history.push('/allraces')
         })
         .catch(err => console.error(err))
       }
