@@ -65,7 +65,6 @@ const mapDispatch = (dispatch) => {
       .then(res => {
         if (!res) return;
         if (res.user.stravaId) {
-          console.log('strava data!', res)
           dispatch(grabRaceFromStrava(res.user.id))
         } else {
           dispatch(getRaceThunk(res.user.id))
