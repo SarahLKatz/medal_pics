@@ -8,7 +8,7 @@ import {auth} from '../store'
  */
 const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
-  let stravaCB = process.env.STRAVA_CALLBACK || 'http://localhost:8080/auth/strava/callback'
+  let stravaCB = process.env.STRAVA_CALLBACK || 'http://racemedalpics.herokuapp.com/auth/strava/callback'
 
   return (
     <div className="container-fluid form-container auth-container">
