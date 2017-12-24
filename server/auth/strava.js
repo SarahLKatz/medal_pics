@@ -36,11 +36,11 @@ if (!process.env.STRAVA_CLIENT_ID || !process.env.STRAVA_CLIENT_SECRET) {
     const email = profile._json.email
 
     User.find({where: {stravaId}})
-      .then(foundUser => (foundUser
+      .then(foundUser => (foundUser)
         ? done(null, foundUser)
         : User.create({name, email, stravaId})
           .then(createdUser => done(null, createdUser))
-      ))
+      )
       .catch(done)
   })
 

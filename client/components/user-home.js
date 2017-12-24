@@ -13,13 +13,16 @@ export const UserHome = (props) => {
   const {name, race, raceCompleted, photos, queryStrava, stravaId} = props;
   let lat, long, raceName, raceDate;
   if (race.race) {
+    console.log('race race!')
     lat = race.race.coords[0];
     long = race.race.coords[1];
     raceName = race.race.name;
     raceDate = moment(race.race.date).format("dddd, MMMM Do, YYYY");
-  } else if (race) {
+  } else if (race.name) {
     raceName = race.name;
     raceDate = moment(race.date).format("dddd, MMMM Do, YYYY");
+  } else if (stravaId) {
+    queryStrava()
   }
 
   return (
@@ -32,7 +35,7 @@ export const UserHome = (props) => {
         {
           (raceCompleted || stravaId) ?
           <div>
-            <h4>Congratulations on Your Race, {raceName}!</h4>
+            <h4>Congratulations on Your Race, {raceName}, on {raceDate}!</h4>
             <p>
               Looking to take some awesome post-race medal pictures? Here are some pictures taken nearby that you can use for inspiration:
             </p>

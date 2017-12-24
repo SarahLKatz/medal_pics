@@ -63,7 +63,6 @@ const NewRace = (props) => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  console.log(ownProps)
   return {
     submitRace(e) {
       e.preventDefault();
