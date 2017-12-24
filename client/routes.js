@@ -63,6 +63,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       .then(res => {
+        if (!res) return;
         if (res.user.stravaId) {
           dispatch(grabRaceFromStrava(res.user.id))
         } else {

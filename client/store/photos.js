@@ -26,6 +26,7 @@ export const fetchPicturesFromAPI = (location) =>
       axios.get(url)
         .then(res => {
           dispatch(fetchPictures(res.data.photos.photo))
+          history.push('/home')
         })
         .catch(err => console.error(err))
       }

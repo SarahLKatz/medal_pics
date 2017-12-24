@@ -1,6 +1,6 @@
 const passport = require('passport')
 const router = require('express').Router()
-var StravaStrategy = require('passport-strava').Strategy;
+var StravaStrategy = require('passport-strava-oauth2').Strategy;
 const {User} = require('../db/models')
 module.exports = router
 
@@ -36,11 +36,11 @@ if (!process.env.STRAVA_CLIENT_ID || !process.env.STRAVA_CLIENT_SECRET) {
     const email = profile._json.email
 
     User.find({where: {stravaId}})
-      .then(foundUser => (foundUser
+      .then(foundUser => (foundUser)
         ? done(null, foundUser)
         : User.create({name, email, stravaId})
           .then(createdUser => done(null, createdUser))
-      ))
+      )
       .catch(done)
   })
 
