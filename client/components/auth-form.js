@@ -8,6 +8,7 @@ import {auth} from '../store'
  */
 const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
+  let stravaCB = process.env.STRAVA_CALLBACK || 'http://localhost:8080/auth/strava/callback'
 
   return (
     <div className="container-fluid form-container auth-container">
@@ -33,7 +34,7 @@ const AuthForm = (props) => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <div className="oaths">
-        <a href="https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=http://racemedalpics.herokuapp.com/auth/strava/callback"><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
+        <a href={`https://www.strava.com/oauth/authorize?client_id=21423&response_type=code&redirect_uri=${stravaCB}`}><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
       {/*<a href="/auth/google">{displayName} with Google</a>*/}
       </div>
     </div>

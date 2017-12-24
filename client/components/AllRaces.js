@@ -5,7 +5,7 @@ import axios from 'axios';
 import {getAllRacesThunk} from '../store/allRaces';
 
 const AllRaces = (props) => {
-  const {completedRaces, upcomingRaces, getAllRaces} = props;
+  const {completedRaces, upcomingRaces, stravaId, getAllRaces} = props;
   if (!completedRaces.length && !upcomingRaces.length) getAllRaces();
 
   return (
@@ -35,7 +35,14 @@ const AllRaces = (props) => {
         </div>
       }
       {
-        upcomingRaces.length === 0 && completedRaces.length === 0 && <h4><a href="/newrace">Add a Race</a></h4>
+        upcomingRaces.length === 0 && completedRaces.length === 0 && 
+        (!stravaId) ? 
+          <h4><a href="/newrace">Add a Race</a></h4> 
+        :
+          <div>
+            <h5>Importing previous races from Strava is not currently supported</h5>
+            <h4><a href="/newrace">Add a Race</a></h4>
+          </div>
       }
     </div>   
   )
@@ -44,7 +51,8 @@ const AllRaces = (props) => {
 const mapState = (state) => {
   return {
     completedRaces: state.allRaces.completed || [],
-    upcomingRaces: state.allRaces.upcoming || []
+    upcomingRaces: state.allRaces.upcoming || [],
+    stravaId: state.user.stravaId || ''
   }
 }
 

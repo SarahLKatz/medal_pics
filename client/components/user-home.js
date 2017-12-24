@@ -32,7 +32,7 @@ export const UserHome = (props) => {
         {
           (raceCompleted || stravaId) ?
           <div>
-            <h4>Congratulations on Your Race, {race.race.name}!</h4>
+            <h4>Congratulations on Your Race, {raceName}!</h4>
             <p>
               Looking to take some awesome post-race medal pictures? Here are some pictures taken nearby that you can use for inspiration:
             </p>
