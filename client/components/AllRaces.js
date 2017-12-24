@@ -35,14 +35,10 @@ const AllRaces = (props) => {
         </div>
       }
       {
-        upcomingRaces.length === 0 && completedRaces.length === 0 && 
-        (!stravaId) ? 
-          <h4><a href="/newrace">Add a Race</a></h4> 
-        :
-          <div>
-            <h5>Importing previous races from Strava is not currently supported</h5>
-            <h4><a href="/newrace">Add a Race</a></h4>
-          </div>
+        stravaId && <h5>Importing previous races from Strava is not currently supported</h5>
+      }
+      {
+        upcomingRaces.length === 0 && completedRaces.length === 0 && <h4><a href="/newrace">Add a Race</a></h4> 
       }
     </div>   
   )
