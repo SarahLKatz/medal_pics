@@ -28,7 +28,7 @@ export const createRaceThunk = (race) =>
       axios.post(`/api/users/${race.userId}/races`, race)
         .then(res => {
           dispatch(createRace(res.data))
-          history.push('/home')
+          history.push('/allraces')
         })
         .catch(err => console.error(err))
       }
@@ -55,7 +55,7 @@ export const grabRaceFromStrava = (userId) =>
 
 export const getRaceThunk = (userId) => 
   dispatch =>
-    axios.get(`/api/users/${userId}/races`)
+    axios.get(`/api/users/${userId}/last`)
     .then(res => res.data)
     .then(raceData => dispatch(getRace(raceData)))
 

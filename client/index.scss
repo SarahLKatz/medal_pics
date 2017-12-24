@@ -10,12 +10,12 @@ body {
   }
 
   .container {
-    border: 1px solid #CCCFFF;
+    border: 1px solid #DDDDDD;
     padding: 2%;
   }
 
   .main-content {
-    background-color: #CCCFFF;
+    background-color: #EEE;
   }
 
   nav {
@@ -23,7 +23,7 @@ body {
     a {
       display: inline-block;
       margin: 0.25em 1em;
-      color: #CCCFFF;
+      color: #CCC;
     }
   }
 
@@ -49,6 +49,16 @@ body {
     }
   }
 
+  .allRaces {
+    padding: 1%; 
+    font-weight: bold;
+
+    .allRaces-race {
+      font-size: 1em;
+      font-weight: normal;
+    }
+  }
+
   .apis {
     height: 5vh;
     text-align: center;
@@ -67,6 +77,10 @@ body {
   }
 
   .oaths {
+  }
+
+  .time-select {
+    margin-right: 0.2em;
   }
 }
 
