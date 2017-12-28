@@ -26,6 +26,7 @@ export const me = () =>
     axios.get('/auth/me')
       .then(res =>{
         dispatch(getUser(res.data || defaultUser))
+        history.push(history.location)
       })
       .catch(err => console.log(err))
 

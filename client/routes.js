@@ -16,7 +16,10 @@ class Routes extends Component {
   }
 
   render () {
-    const {isLoggedIn, userId, race, getPictures} = this.props
+    const {isLoggedIn, userId, race, loadRace, getPictures} = this.props
+    if (userId && !race.race) {
+      loadRace(userId)
+    }
     if (race.race) getPictures(race.race.coords)
     else if (race.id) getPictures(race.coords)
     return (
@@ -62,21 +65,25 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
-      .then(res => {
-        if (!res) return;
-        if (res.user.stravaId) {
-          dispatch(grabRaceFromStrava(res.user.id))
-        } else {
-          dispatch(getRaceThunk(res.user.id))
-        }
-      })
-      .catch(err => console.error(err))
+    },
+    loadRace(userId) {
+      dispatch(getRaceThunk(userId))
     },
     getPictures (location) {
       dispatch(fetchPicturesFromAPI(location))
     }
   }
 }
+
+// .then(res => {
+//         if (!res) return;
+//         if (res.user.stravaId) {
+//           dispatch(grabRaceFromStrava(res.user.id))
+//         } else {
+//           dispatch(getRaceThunk(res.user.id))
+//         }
+//       })
+//       .catch(err => console.error(err))
 
 export default connect(mapState, mapDispatch)(Routes)
 
