@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, NewRace, AllRaces, Photos} from './components'
-import {me, getRaceThunk, getRaceLocation, grabRaceFromStrava, fetchPicturesFromAPI} from './store'
+import {me, getRaceThunk, getRaceLocation, fetchPicturesFromAPI} from './store'
 
 /**
  * COMPONENT
@@ -16,9 +16,14 @@ class Routes extends Component {
   }
 
   render () {
-    const {isLoggedIn, userId, race, getPictures} = this.props
+    const {isLoggedIn, userId, race, loadRace, stravaId, getPictures} = this.props
+    if (userId && !race.race) {
+      loadRace(userId)
+    }
     if (race.race) getPictures(race.race.coords)
-    else if (race.id) getPictures(race.coords)
+    else if (race.id) {
+      getPictures(race.coords)
+    }
     return (
       <Router history={history}>
         <Main>
@@ -30,8 +35,8 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route exact path="/" render={() => <UserHome userId={userId} race={race}/>} />
-                  <Route path="/home" render={() => <UserHome userId={userId} race={race}/>} />
+                  <Route exact path="/" render={() => <UserHome userId={userId} race={race} />} />
+                  <Route path="/home" render={() => <UserHome userId={userId} race={race} />} />
                   <Route path="/newrace" render={() => <NewRace userId={userId} />} />
                   <Route path="/allraces" render={() => <AllRaces userId={userId} />} />
                 </Switch>
@@ -62,15 +67,9 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
-      .then(res => {
-        if (!res) return;
-        if (res.user.stravaId) {
-          dispatch(grabRaceFromStrava(res.user.id))
-        } else {
-          dispatch(getRaceThunk(res.user.id))
-        }
-      })
-      .catch(err => console.error(err))
+    },
+    loadRace(userId) {
+      dispatch(getRaceThunk(userId))
     },
     getPictures (location) {
       dispatch(fetchPicturesFromAPI(location))

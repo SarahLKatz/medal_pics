@@ -2,15 +2,12 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import {stravaId, stravaCallBack} from '../../secrets.js'
 
 /**
  * COMPONENT
  */
 const AuthForm = (props) => {
   const {name, displayName, handleSubmit, error} = props
-  let stravaCB = stravaCallBack || 'http://racemedalpics.herokuapp.com/auth/strava/callback';
-  let stravaClientId = stravaId || '21423'
 
   return (
     <div className="container-fluid form-container auth-container">
@@ -36,7 +33,7 @@ const AuthForm = (props) => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <div className="oaths">
-        <a href={`https://www.strava.com/oauth/authorize?client_id=${stravaClientId}&response_type=code&redirect_uri=${stravaCB}`}><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
+        <a href="/auth/strava"><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
       {/*<a href="/auth/google">{displayName} with Google</a>*/}
       </div>
     </div>

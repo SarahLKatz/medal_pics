@@ -13,7 +13,6 @@ export const UserHome = (props) => {
   const {name, race, raceCompleted, photos, queryStrava, stravaId} = props;
   let lat, long, raceName, raceDate;
   if (race.race) {
-    console.log('race race!')
     lat = race.race.coords[0];
     long = race.race.coords[1];
     raceName = race.race.name;

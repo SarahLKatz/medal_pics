@@ -46,7 +46,13 @@ if (!process.env.STRAVA_CLIENT_ID || !process.env.STRAVA_CLIENT_SECRET) {
 
   passport.use(strategy);
 
-  router.get('/', passport.authenticate('strava', {scope: 'email'}))
+  router.get('/', passport.authenticate('strava'))
+
+  router.get('/callback', passport.authenticate('strava', { failureRedirect: '/login' }),
+    function(req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/');
+  });
 
   router.get('/callback', passport.authenticate('strava', {
     successRedirect: '/home',
@@ -54,4 +60,6 @@ if (!process.env.STRAVA_CLIENT_ID || !process.env.STRAVA_CLIENT_SECRET) {
   }))
 
 }
+
+// https://www.strava.com/oauth/authorize?client_id=${clientID}&response_type=code&redirect_uri=${callbackURL}
 

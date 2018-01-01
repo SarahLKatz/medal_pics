@@ -19,14 +19,12 @@ const fetchPictures = pictures => ({type: FETCH_PICTURES, pictures})
 /**
  * THUNK CREATORS
  */
-export const fetchPicturesFromAPI = (location) => 
+export const fetchPicturesFromAPI = (coords) => 
   dispatch => {
-    if (location) {
-      let url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2f859e87cf731ecfe3d71d92d0daa62b&tags=landmarks&lat=${location[0]}&lon=${location[1]}&per_page=25&format=json&nojsoncallback=1`
-      axios.get(url)
+    if (coords) {
+      axios.get(`/api/util/photos/${coords}`)
         .then(res => {
-          dispatch(fetchPictures(res.data.photos.photo))
-          history.push('/home')
+          dispatch(fetchPictures(res.data))
         })
         .catch(err => console.error(err))
       }

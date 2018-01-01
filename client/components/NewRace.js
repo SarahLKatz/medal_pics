@@ -81,14 +81,9 @@ const mapDispatch = (dispatch, ownProps) => {
         completionTime: completionTime,
         userId: ownProps.userId
       }
-      let coords;
-      axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${e.target.raceLocale.value}`)
+      axios.get(`/api/util/coords/${e.target.raceLocale.value}`)
       .then(res => {
-        const location = res.data[0];
-        coords = [location.lat, location.lon];
-      })
-      .then(() => {
-        race.coords = coords;
+        race.coords = res.data;
         dispatch(createRaceThunk(race))
       })
       .catch(err => console.error(err))

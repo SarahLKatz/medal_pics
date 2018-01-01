@@ -16,7 +16,9 @@ const AllRaces = (props) => {
           <ul>
           {
             completedRaces.map(race => (
-              <li key={race.id} className="allRaces-race">{race.name} ({moment(race.date).format("MM/DD/YY")}) ~ <a href={`http://www.shothotspot.com/hotspots/?nelng=${race.coords[1]+.005}&nelat=${race.coords[0]+.005}&swlat=${race.coords[0]-.005}&swlng=${race.coords[1]-.005}`}>Nearby Photo Spots</a> ~ <a onClick={() => props.deleteRace(race.id)}>Delete Race</a></li>
+              <li key={race.id} className="allRaces-race">
+                {race.name} ({moment(race.date).format("MM/DD/YY")}) ~ <a href={`http://www.shothotspot.com/hotspots/?nelng=${race.coords[1]+.005}&nelat=${race.coords[0]+.005}&swlat=${race.coords[0]-.005}&swlng=${race.coords[1]-.005}`}>Nearby Photo Spots</a> ~ <a onClick={() => props.deleteRace(race.id)}>Delete Race</a>
+              </li>
             ))
           }
           </ul>
@@ -28,7 +30,9 @@ const AllRaces = (props) => {
           <ul>
           {
             upcomingRaces.map(race => (
-              <li key={race.id} className="allRaces-race">{race.name} ({moment(race.date).format("MM/DD/YY")}) ~ Goal: {race.completionTime} ~ <a onClick={() => props.deleteRace(race.id)}>Delete Race</a></li>
+              <li key={race.id} className="allRaces-race">{
+                race.name} ({moment(race.date).format("MM/DD/YY")}) ~ Goal: {race.completionTime} ~ <a onClick={() => props.deleteRace(race.id)}>Delete Race</a>
+              </li>
             ))
           }
           </ul>
