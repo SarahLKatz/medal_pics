@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const {User, Race} = require('../db/models')
 const moment = require('moment')
+const axios = require('axios')
+const stravaQueryHeaders = process.env.STRAVA_QUERY_HEADERS;
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -60,6 +62,24 @@ router.get('/:id/races', (req,res,next) => {
       }
     })
 })
+
+router.get('/:id/strava', (req, res, next) => {
+  User.findOne({
+    where: {
+      id: req.params.id
+    },
+    attributes: ['stravaId']
+  })
+  .then(stravaId => {
+    if (!stravaId) return;
+    axios.get('https://www.strava.com/api/v3/athlete/activities', { headers: {'Authorization': stravaQueryHeaders} })
+    .then(res => res.data[0])
+    .then(run => {
+      res.json(run)
+    })
+  })
+})
+
 
 router.post('/:id/races', (req, res, next) => {
   Race.create(req.body)

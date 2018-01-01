@@ -35,8 +35,8 @@ export const createRaceThunk = (race) =>
 
 export const grabRaceFromStrava = (userId) => 
   dispatch =>
-    axios.get('https://www.strava.com/api/v3/athlete/activities', { headers: {'Authorization': 'Bearer 3612402b0a8ec04b64bb8b9eb4860d89be6c9273'} })
-    .then(res => res.data[0])
+    axios.get(`/api/users/${userId}/strava`)
+    .then(res => res.data)
     .then(stravaData => {
       axios.post(`/api/users/${userId}/races`, {
         name: stravaData.name,
@@ -48,7 +48,6 @@ export const grabRaceFromStrava = (userId) =>
       })
       .then(res => {
         dispatch(importRaceFromStrava(res.data))
-        history.push('/')
       })
     })
   .catch(err => console.error(err))

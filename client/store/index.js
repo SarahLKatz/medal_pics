@@ -5,7 +5,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
 import race from './race'
 import allRaces from './allRaces'
-import location from './location'
 import photos from './photos'
 
 const reducer = combineReducers({user, race, allRaces, location, photos})
@@ -18,5 +17,4 @@ const store = createStore(reducer, middleware)
 export default store
 export * from './user'
 export * from './race'
-export * from './location'
 export * from './photos'
