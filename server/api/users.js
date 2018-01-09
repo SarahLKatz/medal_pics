@@ -82,8 +82,8 @@ router.get('/:id/strava', (req, res, next) => {
 
 
 router.post('/:id/races', (req, res, next) => {
-  Race.create(req.body)
-  .then(race => res.json(race))
+  Race.findOrCreate({where: {userId: req.body.userId, name: req.body.name, date: req.body.date}, defaults: req.body})
+  .spread((race, created) => res.json(race))
 })
 
 router.delete('/:id/race/:raceId', (req,res,next) => {
