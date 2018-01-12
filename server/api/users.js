@@ -54,8 +54,8 @@ router.get('/:id/races', (req,res,next) => {
           }
         }
         res.json({
-          completed: completedRaces,
-          upcoming: upcomingRaces
+          completed: completedRaces.sort((a,b) => a.date > b.date),
+          upcoming: upcomingRaces.sort((a,b) => a.date > b.date)
         })
       } else {
         res.json({})
