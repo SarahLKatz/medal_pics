@@ -4,6 +4,7 @@ const moment = require('moment')
 const axios = require('axios')
 const stravaQueryHeaders = process.env.STRAVA_QUERY_HEADERS;
 module.exports = router
+const now = moment();
 
 router.get('/', (req, res, next) => {
   User.findAll({
@@ -47,15 +48,15 @@ router.get('/:id/races', (req,res,next) => {
         let completedRaces = [];
         let upcomingRaces = [];
         for (let i = 0; i < races.length; i++) {
-          if (races[i].isCompleted()) {
+          if (moment(races[i].date).isBefore(now)) {
             completedRaces.push(races[i])
           } else {
             upcomingRaces.push(races[i])
           }
         }
         res.json({
-          completed: completedRaces.sort((a,b) => a.date > b.date),
-          upcoming: upcomingRaces.sort((a,b) => a.date > b.date)
+          completed: completedRaces.sort((a,b) => moment(a.date).isAfter(b.date)),
+          upcoming: upcomingRaces.sort((a,b) => moment(a.date).isAfter(b.date))
         })
       } else {
         res.json({})
