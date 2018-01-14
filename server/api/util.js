@@ -20,7 +20,7 @@ router.get('/photos/:coords', (req, res, next) => {
   let photos;
   let lat = coords[0];
   let lon = coords[1];
-  axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrAPI}&tags=landmarks&lat=${lat}&lon=${lon}&per_page=25&format=json&nojsoncallback=1`)
+  axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrAPI}&tags=background%2Clandmark&lat=${lat}&lon=${lon}&per_page=25&format=json&nojsoncallback=1`)
   .then(res => {
     photos = res.data.photos.photo; 
   })
