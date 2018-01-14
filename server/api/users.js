@@ -48,7 +48,7 @@ router.get('/:id/races', (req,res,next) => {
         let completedRaces = [];
         let upcomingRaces = [];
         for (let i = 0; i < races.length; i++) {
-          if (race[i].isCompleted()) {
+          if (races[i].isCompleted()) {
             completedRaces.push(races[i])
           } else {
             upcomingRaces.push(races[i])
