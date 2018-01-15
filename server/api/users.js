@@ -25,7 +25,7 @@ router.get('/:id/last', (req,res,next) => {
   })
     .then(races => {
       if (races.length){
-        let pastRaces = races.filter(race => race.isCompleted()).sort((a,b) => a.date > b.date);
+        let pastRaces = races.filter(race => moment(race.date).isAfter(now.subtract(7,'d')));
         const lastRace = pastRaces[pastRaces.length-1];
         res.json({
           race: lastRace,
@@ -55,8 +55,8 @@ router.get('/:id/races', (req,res,next) => {
           }
         }
         res.json({
-          completed: completedRaces.sort((a,b) => moment(a.date).isAfter(b.date)),
-          upcoming: upcomingRaces.sort((a,b) => moment(a.date).isAfter(b.date))
+          completed: completedRaces.sort((a,b) => moment(a.date).isAfter(moment(b.date))),
+          upcoming: upcomingRaces.sort((a,b) => moment(a.date).isAfter(moment(b.date)))
         })
       } else {
         res.json({})
