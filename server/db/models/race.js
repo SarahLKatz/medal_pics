@@ -29,7 +29,9 @@ const Race = db.define('race', {
   getterMethods: {
     finishTime() {
       const start = this.date + 'T' + this.start
-      const runTime = this.completionTime.split(':')
+      let runTime;
+      if (!this.completionTime) runTime = [0,0];
+      else runTime = this.completionTime.split(':');
       return moment(start).add({hours: runTime[0], minutes: runTime[1], seconds: runTime[2]})
     }
   }
