@@ -93,7 +93,24 @@ router.get('/:id/strava/:date', (req, res, next) => {
     if (!stravaId) return;
     start = moment(req.params.date).subtract(1, 'days').unix();
     end = moment(req.params.date).add(1, 'days').unix();
-    console.log(start, end)
+    axios.get(`https://www.strava.com/api/v3/athlete/activities?after=${start}&before=${end}`, { headers: {'Authorization': stravaQueryHeaders} })
+    .then(res => res.data)
+    .then(run => {
+      res.json(run)
+    })
+  })
+})
+
+router.get('/:id/strava/me', (req, res, next) => {
+  let start, end;
+  User.findOne({
+    where: {
+      id: req.params.id
+    },
+    attributes: ['stravaId']
+  })
+  .then(stravaId => {
+    if (!stravaId) return;
     axios.get(`https://www.strava.com/api/v3/athlete/activities?after=${start}&before=${end}`, { headers: {'Authorization': stravaQueryHeaders} })
     .then(res => res.data)
     .then(run => {
