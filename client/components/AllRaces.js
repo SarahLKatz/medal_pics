@@ -3,9 +3,10 @@ import {connect} from 'react-redux'
 import moment from 'moment';
 import axios from 'axios';
 import {getAllRacesThunk} from '../store/allRaces';
+import {StravaImport} from './';
 
 const AllRaces = (props) => {
-  const {completedRaces, upcomingRaces, stravaId, getAllRaces} = props;
+  const {completedRaces, upcomingRaces, stravaId, userId, getAllRaces} = props;
   if (!completedRaces.length && !upcomingRaces.length) getAllRaces();
 
   return (
@@ -39,7 +40,7 @@ const AllRaces = (props) => {
         </div>
       }
       {
-        stravaId && <h5>Importing previous races from Strava is not currently supported</h5>
+        stravaId && <StravaImport userId={userId}/>
       }
       {
         upcomingRaces.length === 0 && completedRaces.length === 0 && <h4><a href="/newrace">Add a Race</a></h4> 
@@ -52,6 +53,7 @@ const mapState = (state) => {
   return {
     completedRaces: state.allRaces.completed || [],
     upcomingRaces: state.allRaces.upcoming || [],
+    userId: state.user.id,
     stravaId: state.user.stravaId || ''
   }
 }

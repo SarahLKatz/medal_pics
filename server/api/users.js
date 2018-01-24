@@ -101,7 +101,6 @@ router.get('/:id/strava/:date', (req, res, next) => {
   })
 })
 
-
 router.post('/:id/races', (req, res, next) => {
   Race.findOrCreate({where: {userId: req.body.userId, name: req.body.name, date: req.body.date}, defaults: req.body})
   .spread((race, created) => res.json(race))
