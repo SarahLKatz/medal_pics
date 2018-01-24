@@ -50,7 +50,6 @@ const Main = (props) => {
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log(state)
   return {
     isLoggedIn: !!state.user.id
   }
