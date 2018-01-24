@@ -47,7 +47,7 @@ export const grabRaceFromStrava = (userId) =>
         userId: userId
       })
       .then(res => {
-        dispatch(importRaceFromStrava(res.data))
+        dispatch(importRaceFromStrava({race: res.data, isCompleted: true}))
       })
     })
   .catch(err => console.error(err))

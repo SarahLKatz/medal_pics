@@ -3,23 +3,26 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import Photos from './Photos'
-import {grabRaceFromStrava} from '../store'
+import {getRaceThunk, grabRaceFromStrava, fetchPicturesFromAPI} from '../store'
 import moment from 'moment';
 
 /**
  * COMPONENT
  */
 export const UserHome = (props) => {
-  const {name, race, raceCompleted, photos, queryStrava, stravaId} = props;
+  const {userId, name, race, loadRace, raceCompleted, photos, queryStrava, stravaId, getPictures} = props;
   let lat, long, raceName, raceDate;
+  if (userId && !race.race) {
+    loadRace(userId)
+  } else if (race.race.userId !== userId) {
+    loadRace(userId)
+  }
   if (race.race) {
     lat = race.race.coords[0];
     long = race.race.coords[1];
     raceName = race.race.name;
     raceDate = moment(race.race.date).format("dddd, MMMM Do, YYYY");
-  } else if (race.name) {
-    raceName = race.name;
-    raceDate = moment(race.date).format("dddd, MMMM Do, YYYY");
+    if (photos.length < 1) getPictures(race.race.coords)
   } else if (stravaId) {
     queryStrava()
   }
@@ -69,6 +72,7 @@ export const UserHome = (props) => {
 const mapState = (state) => {
   return {
     user: state.user,
+    userId: state.user.id,
     name: state.user.name || 'Runner',
     race: state.race,
     raceCompleted: state.race.completed,
@@ -79,6 +83,12 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
+    loadRace(userId) {
+      dispatch(getRaceThunk(userId))
+    },
+    getPictures (location) {
+      dispatch(fetchPicturesFromAPI(location))
+    },
     queryStrava () {
       dispatch(grabRaceFromStrava(ownProps.userId))
     }

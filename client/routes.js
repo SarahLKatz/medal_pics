@@ -16,14 +16,8 @@ class Routes extends Component {
   }
 
   render () {
-    const {isLoggedIn, userId, race, loadRace, stravaId, getPictures} = this.props
-    if (userId && !race.race) {
-      loadRace(userId)
-    }
-    if (race.race) getPictures(race.race.coords)
-    else if (race.id) {
-      getPictures(race.coords)
-    }
+    const {isLoggedIn, userId, race} = this.props;
+    
     return (
       <Router history={history}>
         <Main>
@@ -35,10 +29,10 @@ class Routes extends Component {
               isLoggedIn &&
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route exact path="/" render={() => <UserHome userId={userId} race={race} />} />
-                  <Route path="/home" render={() => <UserHome userId={userId} race={race} />} />
-                  <Route path="/newrace" render={() => <NewRace userId={userId} />} />
-                  <Route path="/allraces" render={() => <AllRaces userId={userId} />} />
+                  <Route exact path="/" render={() => <UserHome />} />
+                  <Route path="/home" render={() => <UserHome />} />
+                  <Route path="/newrace" render={() => <NewRace />} />
+                  <Route path="/allraces" render={() => <AllRaces />} />
                 </Switch>
             }
             {/* Displays our Login component as a fallback */}
@@ -58,8 +52,6 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    userId: state.user.id,
-    race: state.race
   }
 }
 
@@ -67,12 +59,6 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
-    },
-    loadRace(userId) {
-      dispatch(getRaceThunk(userId))
-    },
-    getPictures (location) {
-      dispatch(fetchPicturesFromAPI(location))
     }
   }
 }
