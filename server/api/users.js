@@ -101,24 +101,6 @@ router.get('/:id/strava/:date', (req, res, next) => {
   })
 })
 
-router.get('/:id/strava/me', (req, res, next) => {
-  let start, end;
-  User.findOne({
-    where: {
-      id: req.params.id
-    },
-    attributes: ['stravaId']
-  })
-  .then(stravaId => {
-    if (!stravaId) return;
-    axios.get(`https://www.strava.com/api/v3/athlete/activities?after=${start}&before=${end}`, { headers: {'Authorization': stravaQueryHeaders} })
-    .then(res => res.data)
-    .then(run => {
-      res.json(run)
-    })
-  })
-})
-
 
 router.post('/:id/races', (req, res, next) => {
   Race.findOrCreate({where: {userId: req.body.userId, name: req.body.name, date: req.body.date}, defaults: req.body})
