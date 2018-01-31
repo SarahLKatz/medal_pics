@@ -17,9 +17,11 @@ export default class StravaImport extends Component {
 
   findStravaRace(e) {
     e.preventDefault();
-    let date = this.state.raceDate;
-    date = date.replace(/\//ig, "-");
-    axios.get(`api/users/${this.props.userId}/strava/${date}`)
+    let date = moment(this.state.raceDate);
+    if (!date.isValid()) {
+      date = moment(this.state.raceDate, ["MM-DD-YY"])
+    }
+    axios.get(`api/users/${this.props.userId}/strava/${date.format("MM-DD-YYYY")}`)
     .then(res => res.data)
     .then(raceList => this.setState({raceList, submitted: true}))
   }
