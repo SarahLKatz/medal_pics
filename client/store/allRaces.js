@@ -21,12 +21,13 @@ const getAllRaces = allRaces => ({type: GET_ALL_RACES, allRaces})
  */
 export const getAllRacesThunk = (userId) => 
   dispatch => {
-      axios.get(`/api/users/${userId}/races`)
-        .then(res => {
-          dispatch(getAllRaces(res.data))
-        })
-        .catch(err => console.error(err))
-      }
+    axios.get(`/api/users/${userId}/races`)
+      .then(res => {
+        dispatch(getAllRaces(res.data))
+      })
+      .catch(err => console.error(err))
+    }
+
 
 /**
  * REDUCER
