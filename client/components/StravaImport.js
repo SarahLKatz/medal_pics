@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import moment from 'moment';
 import axios from 'axios';
-import {getAllRacesThunk} from '../store/allRaces';
+import { getAllRacesThunk } from '../store/allRaces';
 
-export default class StravaImport extends Component {
+class StravaImport extends Component {
   constructor() {
     super()
     this.state = {
@@ -21,7 +22,8 @@ export default class StravaImport extends Component {
     if (!date.isValid()) {
       date = moment(this.state.raceDate, ["MM-DD-YY"])
     }
-    axios.get(`api/users/${this.props.userId}/strava/${date.format("MM-DD-YYYY")}`)
+    date = date.format("MM-DD-YYYY")
+    axios.get(`api/users/${this.props.userId}/strava/${date}`)
     .then(res => res.data)
     .then(raceList => this.setState({raceList, submitted: true}))
   }
@@ -38,6 +40,9 @@ export default class StravaImport extends Component {
       location: race.location_country,
       coords: race.end_latlng,
       userId: userId
+    })
+    .then(() => {
+      this.props.getRaces()
     })
     .then(() => this.setState({raceList: [], raceDate: '', submitted: false}))
   }
@@ -67,3 +72,11 @@ export default class StravaImport extends Component {
     )
   }
 }
+
+const mapDispatch = (dispatch, ownProps) => {
+  return {
+    getRaces: () => dispatch(getAllRacesThunk(ownProps.userId))
+  }
+}
+
+export default connect(() => ({}), mapDispatch)(StravaImport)
