@@ -8,17 +8,24 @@ export default class StravaImport extends Component {
     super()
     this.state = {
       raceList: [],
+      raceDate: '',
       submitted: false
     }
     this.findStravaRace = this.findStravaRace.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   findStravaRace(e) {
     e.preventDefault();
-    let date = e.target.raceDate.value;
+    let date = this.state.raceDate;
+    date = date.replace(/\//ig, "-");
     axios.get(`api/users/${this.props.userId}/strava/${date}`)
     .then(res => res.data)
     .then(raceList => this.setState({raceList, submitted: true}))
+  }
+
+  handleChange(e) {
+    this.setState({raceDate: e.target.value})
   }
 
   addRaceToList(race, userId) {
@@ -30,17 +37,17 @@ export default class StravaImport extends Component {
       coords: race.end_latlng,
       userId: userId
     })
-    .then(() => this.setState({raceList: [], submitted: false}))
+    .then(() => this.setState({raceList: [], raceDate: '', submitted: false}))
   }
 
   render() {
-    const {raceList, submitted} = this.state;
+    const {raceList, submitted, raceDate} = this.state;
     return (
       <div> 
         <h5>Import a Race From Strava: </h5>
         <form onSubmit={this.findStravaRace}>
           <label htmlFor="raceDate"><small>Race Date: </small>
-            <input name="raceDate" type="text" />
+            <input name="raceDate" type="text" value={raceDate} onChange={this.handleChange}/>
           </label>
           <button type="submit">Submit!</button>
         </form>
