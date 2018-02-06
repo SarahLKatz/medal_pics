@@ -74,9 +74,13 @@ router.get('/:id/strava', (req, res, next) => {
   .then(stravaId => {
     if (!stravaId) return;
     axios.get('https://www.strava.com/api/v3/athlete/activities', { headers: {'Authorization': stravaQueryHeaders} })
-    .then(res => res.data[0])
-    .then(run => {
-      res.json(run)
+    .then(res => res.data)
+    .then(data => {
+      let runIdx = 0;
+      while (!data[runIdx].end_latlng) {
+        runIdx++
+      }
+      res.json(data[runIdx])
     })
   })
 })
