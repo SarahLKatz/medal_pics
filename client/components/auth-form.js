@@ -33,7 +33,7 @@ const AuthForm = (props) => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <div className="oaths">
-        <a href="/auth/strava"><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>
+        {/* <a href="/auth/strava"><img src={__dirname + 'btn_strava_connectwith_light.png'} /></a>*/}
       {/*<a href="/auth/google">{displayName} with Google</a>*/}
       </div>
     </div>
