@@ -21,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.21.0",
     "body-parser": "^1.16.1",
     "compression": "^1.7.1",
     "connect-session-sequelize": "^4.1.0",
@@ -68,7 +68,7 @@
     "eslint-plugin-react": "^7.4.0",
     "file-loader": "^0.11.2",
     "mocha": "^3.3.0",
-    "node-sass": "^4.5.0",
+    "node-sass": "^4.14.1",
     "nodemon": "^1.18.7",
     "react-test-renderer": "^16.0.0",
     "redux-devtools-extension": "^2.13.2",
